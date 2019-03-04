@@ -44,6 +44,8 @@
     <Compile Include="Utilities\ColorHelpers.cs" />
     <Compile Include="Drawables\Rectangle.cs" />
     <Compile Include="Utilities\FixedRateLooper.cs" />
+    <Compile Include="Drawables\Line.cs" />
+    <Compile Include="Utilities\Constants.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

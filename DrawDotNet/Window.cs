@@ -54,8 +54,10 @@ namespace DrawDotNet
                 h = Height
             };
 
-            renderThread = new FixedRateLooper(-1, renderLoop);
-            updateThread = new FixedRateLooper(1, new Action(() =>
+            var tickRate = 60;
+
+            renderThread = new FixedRateLooper("render-thread", tickRate, renderLoop);
+            updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() =>
                 { foreach (var e in entities) e.Update(); }));
         }
 
@@ -82,10 +84,14 @@ namespace DrawDotNet
             updateThread.Start();
         }
 
+        public void setPixel(int x, int y) 
+        {
+            SDL.SDL_RenderDrawPoint(RendererPtr, x, y);
+        }
+
         public void Dispose()
         {
             renderThread.Cancel(); updateThread.Cancel();
-            renderThread.Join(); updateThread.Join();
             SDL.SDL_DestroyRenderer(RendererPtr);
             SDL.SDL_DestroyWindow(WindowPtr);
         }

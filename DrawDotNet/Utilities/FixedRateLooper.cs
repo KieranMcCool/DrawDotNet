@@ -7,7 +7,7 @@ namespace DrawDotNet.Utilities
 {
     public class FixedRateLooper
     {
-
+        string name;
         Stopwatch timer;
         Action action;
         long cyclesPerSecond;
@@ -22,6 +22,11 @@ namespace DrawDotNet.Utilities
         CancellationTokenSource cancellationTokenSource;
         CancellationToken cancellationToken;
 
+        public FixedRateLooper(string name, long cyclesPerSecond, Action action): this(cyclesPerSecond, action)
+        {
+            this.name = name;
+        }
+
         public FixedRateLooper(long cyclesPerSecond, Action action)
         {
             timer = new Stopwatch();
@@ -29,10 +34,9 @@ namespace DrawDotNet.Utilities
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
             this.action = action;
-            task = new Task(taskLoop, cancellationToken);
+            task = new Task(TaskLoop, cancellationToken);
+            timer.Start();
         }
-
-
 
         public void Join() 
         {
@@ -41,6 +45,7 @@ namespace DrawDotNet.Utilities
 
         public void Cancel()
         {
+            timer.Stop();
             cancellationTokenSource.Cancel();
         }
 
@@ -49,14 +54,23 @@ namespace DrawDotNet.Utilities
             task.Start();
         }
 
-        private void taskLoop()
+        private void TaskLoop()
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                timer.Reset();
+                var frameStart = timer.ElapsedMilliseconds;
                 action();
-                if (cyclesPerSecond != -1) 
-                    Thread.Sleep((int)((1000 / cyclesPerSecond) - timer.ElapsedMilliseconds));
+                var frameEnd = timer.ElapsedMilliseconds;
+
+                var frameTime = frameEnd - frameStart;
+
+                Console.WriteLine("[{0}] - {1}ms", name, frameTime);
+                var timeLeft = 1000 / cyclesPerSecond - frameTime;
+
+                if (cyclesPerSecond != -1)
+                {
+                    if (timeLeft > 0) Thread.Sleep((int)timeLeft);
+                }
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Drawing;
 using SDL2;
 using DrawDotNet.Interfaces;
+using DrawDotNet.Utilities;
 
 namespace DrawDotNet.Drawables
 {
@@ -12,7 +13,7 @@ namespace DrawDotNet.Drawables
         bool fill;
         public int j;
 
-        static Random r = new Random();
+        static readonly Random r = Constants.RandomNumberGenerator;
 
         public Rectangle(int x, int y, int w, int h, bool fill)
         {
@@ -44,24 +45,6 @@ namespace DrawDotNet.Drawables
 
         public void Update()
         {
-            j++;
-            var direction = r.Next(4);
-            switch(direction)
-            {
-                case 0:
-
-                    rectangle.x += r.Next(-5, 5);
-                    break;
-                case 1:
-                    rectangle.y += r.Next(-5, 5);
-                    break;
-                case 2:
-                    rectangle.w += r.Next(-5, 5);
-                    break;
-                case 3:
-                    rectangle.h += r.Next(-5, 5);
-                    break;
-            }
         }
     }
 }
