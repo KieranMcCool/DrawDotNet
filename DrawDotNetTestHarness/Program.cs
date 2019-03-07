@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using DrawDotNet;
 using DrawDotNet.Interfaces;
 using DrawDotNet.Drawables;
@@ -14,8 +15,7 @@ namespace DrawDotNetTestHarness
         {
             var r = Constants.RandomNumberGenerator;
             int size = 800;
-            var window = new Window(size, size, Color.DodgerBlue);
-            window.Show();
+            var window = new Window("Test Window", size, size, Color.DodgerBlue);
 
             var entities = new List<IDrawable>();
 
@@ -29,9 +29,13 @@ namespace DrawDotNetTestHarness
                 window.addEntity(rect);
             }
 
-            Console.Read();
+            Task.Factory.StartNew(() =>
+            {
+                Console.Read();
+                window.Dispose();
+            });
 
-            window.Dispose();
+            window.Show();
         }
     }
 }

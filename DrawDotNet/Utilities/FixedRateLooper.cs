@@ -54,6 +54,11 @@ namespace DrawDotNet.Utilities
             task.Start();
         }
 
+        public void StartSynchronous()
+        {
+            TaskLoop();
+        }
+
         private void TaskLoop()
         {
             while (!cancellationToken.IsCancellationRequested)

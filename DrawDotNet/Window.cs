@@ -18,6 +18,9 @@ namespace DrawDotNet
         int Width;
         int Height;
 
+        Point location;
+        string title;
+
         ConcurrentBag<IDrawable> entities;
 
         bool renderIsInit = false;
@@ -30,11 +33,15 @@ namespace DrawDotNet
         Color DrawingColor;
         Color BackgroundColor;
 
-        public Window(int width, int height) : this(width, height, Color.Black)
-        {
-        }
 
-        public Window(int width, int height, Color backgroundColour)
+        #region constructors
+        /* Constructors
+         * ============ */
+
+        public Window(string title, int width, int height) : 
+        this(title, width, height, Color.Black) { }
+
+        public Window(string title, int width, int height, Color backgroundColour)
         {
             Width = width;
             Height = height;
@@ -59,8 +66,10 @@ namespace DrawDotNet
             renderThread = new FixedRateLooper("render-thread", tickRate, renderLoop);
             updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() =>
                 { foreach (var e in entities) e.Update(); }));
-        }
 
+            this.title = title;
+        }
+#endregion
 
         private void init()
         {
@@ -69,6 +78,8 @@ namespace DrawDotNet
 
             window = SDL.SDL_CreateWindow("", 0, 0, Width, Height, SDL.SDL_WindowFlags.SDL_WINDOW_INPUT_FOCUS);
             renderer = SDL.SDL_CreateRenderer(window, 0, SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC);
+
+            if (title != null) SDL.SDL_SetWindowTitle(WindowPtr, title);
 
             WindowPtr = window;
             RendererPtr = renderer;
@@ -80,8 +91,8 @@ namespace DrawDotNet
         public void Show()
         {
             SDL.SDL_ShowWindow(WindowPtr);
-            renderThread.Start();
             updateThread.Start();
+            renderThread.StartSynchronous();
         }
 
         public void setPixel(int x, int y) 
@@ -110,5 +121,37 @@ namespace DrawDotNet
             foreach (IDrawable d in entities) d.Draw(RendererPtr, DrawingColor);
             SDL.SDL_RenderPresent(RendererPtr);
         }
+
+#region properties
+
+        /* Properties
+         * =========== */
+        public Point Location
+        {
+            get => location;
+
+            set
+            {
+                if (!location.Equals(value))
+                {
+                    this.location = value;
+                    SDL.SDL_SetWindowPosition(WindowPtr, location.X, location.Y);
+                }
+            }
+        }
+
+        public String Title
+        {
+            get => title;
+            set
+            {
+                if (!title.Equals(value))
+                {
+                    title = value;
+                    SDL.SDL_SetWindowTitle(WindowPtr, title);
+                }
+            }
+        }
+        #endregion
     }
 }
