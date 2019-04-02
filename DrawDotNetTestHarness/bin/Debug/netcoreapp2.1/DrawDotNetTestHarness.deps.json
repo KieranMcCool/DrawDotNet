@@ -1,0 +1,54 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "81daa9459db7261b4735305742070fdc2eefce3d"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "DrawDotNetTestHarness/1.0.0": {
+        "dependencies": {
+          "DrawDotNet": "1.0.0"
+        },
+        "runtime": {
+          "DrawDotNetTestHarness.dll": {}
+        }
+      },
+      "SDL2-CS.NetCore/2.0.8": {
+        "runtime": {
+          "lib/netstandard2.0/SDL2-CS.dll": {
+            "assemblyVersion": "2.0.8.0",
+            "fileVersion": "2.0.8.0"
+          }
+        }
+      },
+      "DrawDotNet/1.0.0": {
+        "dependencies": {
+          "SDL2-CS.NetCore": "2.0.8"
+        },
+        "runtime": {
+          "DrawDotNet.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DrawDotNetTestHarness/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SDL2-CS.NetCore/2.0.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Nn1duzenQyZcFLkiA+hrFkOIB4+c1BbZzNyN2HqPg3+/wyaF2Yxeb8A5pbTmXoifTa3yjcURB+8CRE1GS8BpjA==",
+      "path": "sdl2-cs.netcore/2.0.8",
+      "hashPath": "sdl2-cs.netcore.2.0.8.nupkg.sha512"
+    },
+    "DrawDotNet/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
