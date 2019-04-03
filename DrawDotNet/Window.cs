@@ -63,10 +63,11 @@ namespace DrawDotNet
             };
 
             var tickRate = 60;
+            bool printLog = false;
 
-            renderThread = new FixedRateLooper("render-thread", tickRate, renderLoop);
+            renderThread = new FixedRateLooper("render-thread", tickRate, renderLoop, printLog);
             updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() =>
-                { foreach (var e in entities) e.Update(); }));
+                { foreach (var e in entities) e.Update(); }), printLog);
             eventThread = new FixedRateLooper("event-thread", -1, eventLoop, false);
 
             this.title = title;
@@ -134,12 +135,15 @@ namespace DrawDotNet
                 Console.WriteLine(key);
             }
 
-
             if (leftMouseClick)
             {
+                var rng = Utilities.Constants.RandomNumberGenerator;
                 entities.Add(new Drawables.Rectangle(mouseLocation.X, mouseLocation.Y,
-                    Utilities.Constants.RandomNumberGenerator.Next(10, 300), Utilities.Constants.RandomNumberGenerator.Next(10, 300), true));
+                    rng.Next(10, 300), rng.Next(10, 300), true));
             }
+
+            var quit = e.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE;
+            if (quit) Dispose();
 
         }
 

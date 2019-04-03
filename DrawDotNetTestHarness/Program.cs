@@ -16,16 +16,7 @@ namespace DrawDotNetTestHarness
             var r = Constants.RandomNumberGenerator;
             int size = 800;
             var window = new Window("Test Window", size, size, Color.DodgerBlue);
-
-            Task.Factory.StartNew(() =>
-            {
-                Console.Read();
-                window.Dispose();
-            });
-
             window.Show();
-            Console.Read();
-            window.Dispose();
         }
     }
 }
