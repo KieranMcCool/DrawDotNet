@@ -76,7 +76,7 @@ namespace DrawDotNet
             IntPtr window;
             IntPtr renderer;
 
-            window = SDL.SDL_CreateWindow("", 0, 0, Width, Height, SDL.SDL_WindowFlags.SDL_WINDOW_INPUT_FOCUS);
+            window = SDL.SDL_CreateWindow("", 100, 100, Width, Height, SDL.SDL_WindowFlags.SDL_WINDOW_INPUT_FOCUS);
             renderer = SDL.SDL_CreateRenderer(window, 0, SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC);
 
             if (title != null) SDL.SDL_SetWindowTitle(WindowPtr, title);
