@@ -50,8 +50,10 @@ namespace DrawDotNet
             DrawingColor = Color.Yellow;
 
             if (SDL.SDL_WasInit(SDL.SDL_INIT_VIDEO) == 0)
+            {
                 SDL.SDL_Init(SDL.SDL_INIT_VIDEO);
-            
+            }
+
             BackgroundColor = backgroundColour;
             backgroundArea = new SDL.SDL_Rect()
             {
@@ -61,7 +63,7 @@ namespace DrawDotNet
                 h = Height
             };
 
-            var tickRate = 60;
+            var tickRate = 30;
 
             renderThread = new FixedRateLooper("render-thread", tickRate, renderLoop);
             updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() =>
@@ -76,7 +78,7 @@ namespace DrawDotNet
             IntPtr window;
             IntPtr renderer;
 
-            window = SDL.SDL_CreateWindow("", 0, 0, Width, Height, SDL.SDL_WindowFlags.SDL_WINDOW_INPUT_FOCUS);
+            window = SDL.SDL_CreateWindow("", 20, 30, Width, Height, SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
             renderer = SDL.SDL_CreateRenderer(window, 0, SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC);
 
             if (title != null) SDL.SDL_SetWindowTitle(WindowPtr, title);
@@ -92,7 +94,7 @@ namespace DrawDotNet
         {
             SDL.SDL_ShowWindow(WindowPtr);
             updateThread.Start();
-            renderThread.StartSynchronous();
+            renderThread.Start();
         }
 
         public void setPixel(int x, int y) 
@@ -103,6 +105,7 @@ namespace DrawDotNet
         public void Dispose()
         {
             renderThread.Cancel(); updateThread.Cancel();
+            renderThread.Join(); updateThread.Join();
             SDL.SDL_DestroyRenderer(RendererPtr);
             SDL.SDL_DestroyWindow(WindowPtr);
         }

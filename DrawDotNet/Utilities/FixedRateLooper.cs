@@ -40,7 +40,10 @@ namespace DrawDotNet.Utilities
 
         public void Join() 
         {
-            task.Wait();
+            try
+            {
+                task.Wait();
+            } catch (Exception) { }
         }
 
         public void Cancel()

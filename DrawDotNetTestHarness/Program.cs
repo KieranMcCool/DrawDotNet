@@ -29,13 +29,9 @@ namespace DrawDotNetTestHarness
                 window.addEntity(rect);
             }
 
-            Task.Factory.StartNew(() =>
-            {
-                Console.Read();
-                window.Dispose();
-            });
-
             window.Show();
+
+            Console.Read();
         }
     }
 }
