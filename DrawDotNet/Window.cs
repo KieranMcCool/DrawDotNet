@@ -27,6 +27,7 @@ namespace DrawDotNet
 
         FixedRateLooper renderThread;
         FixedRateLooper updateThread;
+        FixedRateLooper eventThread;
 
         SDL.SDL_Rect backgroundArea;
 
@@ -50,10 +51,8 @@ namespace DrawDotNet
             DrawingColor = Color.Yellow;
 
             if (SDL.SDL_WasInit(SDL.SDL_INIT_VIDEO) == 0)
-            {
                 SDL.SDL_Init(SDL.SDL_INIT_VIDEO);
-            }
-
+            
             BackgroundColor = backgroundColour;
             backgroundArea = new SDL.SDL_Rect()
             {
@@ -63,11 +62,12 @@ namespace DrawDotNet
                 h = Height
             };
 
-            var tickRate = 30;
+            var tickRate = 60;
 
             renderThread = new FixedRateLooper("render-thread", tickRate, renderLoop);
             updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() =>
                 { foreach (var e in entities) e.Update(); }));
+            eventThread = new FixedRateLooper("event-thread", -1, eventLoop, false);
 
             this.title = title;
         }
@@ -78,7 +78,7 @@ namespace DrawDotNet
             IntPtr window;
             IntPtr renderer;
 
-            window = SDL.SDL_CreateWindow("", 20, 30, Width, Height, SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
+            window = SDL.SDL_CreateWindow("", 100, 100, Width, Height, SDL.SDL_WindowFlags.SDL_WINDOW_INPUT_FOCUS);
             renderer = SDL.SDL_CreateRenderer(window, 0, SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC);
 
             if (title != null) SDL.SDL_SetWindowTitle(WindowPtr, title);
@@ -93,8 +93,11 @@ namespace DrawDotNet
         public void Show()
         {
             SDL.SDL_ShowWindow(WindowPtr);
+
+            if (!renderIsInit) init();
             updateThread.Start();
             renderThread.Start();
+            eventThread.StartSynchronous();
         }
 
         public void setPixel(int x, int y) 
@@ -104,8 +107,7 @@ namespace DrawDotNet
 
         public void Dispose()
         {
-            renderThread.Cancel(); updateThread.Cancel();
-            renderThread.Join(); updateThread.Join();
+            renderThread.Cancel(); updateThread.Cancel(); eventThread.Cancel();
             SDL.SDL_DestroyRenderer(RendererPtr);
             SDL.SDL_DestroyWindow(WindowPtr);
         }
@@ -115,9 +117,34 @@ namespace DrawDotNet
             entities.Add(entity);
         }
 
+        private void eventLoop()
+        {
+            SDL.SDL_Event e;
+            SDL.SDL_PollEvent(out e);
+
+            var leftMouseClick = e.button.state == 1 && e.button.button == 1;
+
+            var rightMouseClick = e.button.state == 1 && e.button.button == 3;
+            var mouseLocation = new Point(e.button.x, e.button.y);
+            var keyPressed = e.key.state == 1;
+            string key;
+            if (keyPressed)
+            {
+                key = SDL.SDL_GetKeyName(e.key.keysym.sym);
+                Console.WriteLine(key);
+            }
+
+
+            if (leftMouseClick)
+            {
+                entities.Add(new Drawables.Rectangle(mouseLocation.X, mouseLocation.Y,
+                    Utilities.Constants.RandomNumberGenerator.Next(10, 300), Utilities.Constants.RandomNumberGenerator.Next(10, 300), true));
+            }
+
+        }
+
         private void renderLoop()
         {
-            if (!renderIsInit) init();
             Utilities.ColorHelpers.setRenderColour(RendererPtr, BackgroundColor);
             SDL.SDL_RenderFillRect(RendererPtr, ref backgroundArea);
             Utilities.ColorHelpers.setRenderColour(RendererPtr, DrawingColor);
