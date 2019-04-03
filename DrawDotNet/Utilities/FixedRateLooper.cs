@@ -10,17 +10,18 @@ namespace DrawDotNet.Utilities
         string name;
         Stopwatch timer;
         Action action;
-        long cyclesPerSecond;
+        bool printLog;
 
-        public long CyclesPerSecond
-        {
-            get => cyclesPerSecond;
-            set => cyclesPerSecond = value;
-        }
+        public long CyclesPerSecond { get; private set; }
 
         Task task;
         CancellationTokenSource cancellationTokenSource;
         CancellationToken cancellationToken;
+
+        public FixedRateLooper(string name, long cyclesPerSecond, Action action, bool printLog): this(name, cyclesPerSecond, action)
+        {
+            this.printLog = false;
+        }
 
         public FixedRateLooper(string name, long cyclesPerSecond, Action action): this(cyclesPerSecond, action)
         {
@@ -29,8 +30,9 @@ namespace DrawDotNet.Utilities
 
         public FixedRateLooper(long cyclesPerSecond, Action action)
         {
+            printLog = true;
             timer = new Stopwatch();
-            this.cyclesPerSecond = cyclesPerSecond;
+            this.CyclesPerSecond = cyclesPerSecond;
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
             this.action = action;
@@ -69,10 +71,10 @@ namespace DrawDotNet.Utilities
 
                 var frameTime = frameEnd - frameStart;
 
-                Console.WriteLine("[{0}] - {1}ms", name, frameTime);
-                var timeLeft = 1000 / cyclesPerSecond - frameTime;
+                if (printLog) Console.WriteLine("[{0}] - {1}ms", name, frameTime);
+                var timeLeft = 1000 / CyclesPerSecond - frameTime;
 
-                if (cyclesPerSecond != -1)
+                if (CyclesPerSecond != -1)
                 {
                     if (timeLeft > 0) Thread.Sleep((int)timeLeft);
                 }

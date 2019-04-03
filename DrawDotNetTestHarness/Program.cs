@@ -17,18 +17,6 @@ namespace DrawDotNetTestHarness
             int size = 800;
             var window = new Window("Test Window", size, size, Color.DodgerBlue);
 
-            var entities = new List<IDrawable>();
-
-            for(int i = 0; i < 10000; i++)
-            {
-                var rect = new DrawDotNet.Drawables.Rectangle(r.Next(0, size), 
-                    r.Next(0, size), r.Next(0, size/4), r.Next(0, size/4), 
-                    r.Next(0, 10) > 5, Color.FromArgb(255, r.Next(0,255), 
-                    r.Next(0, 255), r.Next(0, 255)));
-                entities.Add(rect);
-                window.addEntity(rect);
-            }
-
             Task.Factory.StartNew(() =>
             {
                 Console.Read();
@@ -36,6 +24,8 @@ namespace DrawDotNetTestHarness
             });
 
             window.Show();
+            Console.Read();
+            window.Dispose();
         }
     }
 }

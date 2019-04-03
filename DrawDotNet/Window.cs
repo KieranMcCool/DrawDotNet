@@ -27,6 +27,7 @@ namespace DrawDotNet
 
         FixedRateLooper renderThread;
         FixedRateLooper updateThread;
+        FixedRateLooper eventThread;
 
         SDL.SDL_Rect backgroundArea;
 
@@ -66,6 +67,7 @@ namespace DrawDotNet
             renderThread = new FixedRateLooper("render-thread", tickRate, renderLoop);
             updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() =>
                 { foreach (var e in entities) e.Update(); }));
+            eventThread = new FixedRateLooper("event-thread", -1, eventLoop, false);
 
             this.title = title;
         }
@@ -91,8 +93,11 @@ namespace DrawDotNet
         public void Show()
         {
             SDL.SDL_ShowWindow(WindowPtr);
+
+            if (!renderIsInit) init();
             updateThread.Start();
-            renderThread.StartSynchronous();
+            renderThread.Start();
+            eventThread.StartSynchronous();
         }
 
         public void setPixel(int x, int y) 
@@ -102,7 +107,7 @@ namespace DrawDotNet
 
         public void Dispose()
         {
-            renderThread.Cancel(); updateThread.Cancel();
+            renderThread.Cancel(); updateThread.Cancel(); eventThread.Cancel();
             SDL.SDL_DestroyRenderer(RendererPtr);
             SDL.SDL_DestroyWindow(WindowPtr);
         }
@@ -112,9 +117,34 @@ namespace DrawDotNet
             entities.Add(entity);
         }
 
+        private void eventLoop()
+        {
+            SDL.SDL_Event e;
+            SDL.SDL_PollEvent(out e);
+
+            var leftMouseClick = e.button.state == 1 && e.button.button == 1;
+
+            var rightMouseClick = e.button.state == 1 && e.button.button == 3;
+            var mouseLocation = new Point(e.button.x, e.button.y);
+            var keyPressed = e.key.state == 1;
+            string key;
+            if (keyPressed)
+            {
+                key = SDL.SDL_GetKeyName(e.key.keysym.sym);
+                Console.WriteLine(key);
+            }
+
+
+            if (leftMouseClick)
+            {
+                entities.Add(new Drawables.Rectangle(mouseLocation.X, mouseLocation.Y,
+                    Utilities.Constants.RandomNumberGenerator.Next(10, 300), Utilities.Constants.RandomNumberGenerator.Next(10, 300), true));
+            }
+
+        }
+
         private void renderLoop()
         {
-            if (!renderIsInit) init();
             Utilities.ColorHelpers.setRenderColour(RendererPtr, BackgroundColor);
             SDL.SDL_RenderFillRect(RendererPtr, ref backgroundArea);
             Utilities.ColorHelpers.setRenderColour(RendererPtr, DrawingColor);
