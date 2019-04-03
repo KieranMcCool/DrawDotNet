@@ -152,10 +152,22 @@ namespace DrawDotNet
             SDL.SDL_RenderPresent(RendererPtr);
         }
 
-#region properties
+        #region properties
 
         /* Properties
          * =========== */
+
+        public void Focus()
+        {
+            SDL.SDL_RestoreWindow(WindowPtr);
+            SDL.SDL_RaiseWindow(WindowPtr);
+        }
+
+        public void Minimise()
+        {
+            SDL.SDL_MinimizeWindow(WindowPtr);
+        }
+
         public Point Location
         {
             get => location;
