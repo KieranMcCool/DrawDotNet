@@ -101,7 +101,6 @@ namespace DrawDotNet
             renderIsInit = true;
         }
 
-
         public void Show()
         {
             WindowLifecycle.Start();
@@ -150,8 +149,8 @@ namespace DrawDotNet
                 if (leftMouseClick)
                 {
                     var rng = Utilities.Constants.RandomNumberGenerator;
-                    entities.Add(new Drawables.Rectangle(mouseLocation.X, mouseLocation.Y,
-                        rng.Next(10, 300), rng.Next(10, 300), true));
+                    entities.Add(new Drawables.Line(new SDL.SDL_Point() { x = mouseLocation.X, y = mouseLocation.Y },
+                                                    new SDL.SDL_Point() { x = mouseLocation.X + 50, y = mouseLocation.Y + 50}));
                 }
 
                 var quit = e.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE;
