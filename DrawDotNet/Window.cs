@@ -25,6 +25,8 @@ namespace DrawDotNet
 
         bool renderIsInit = false;
 
+        Task WindowLifecycle;
+
         FixedRateLooper renderThread;
         FixedRateLooper updateThread;
         FixedRateLooper eventThread;
@@ -63,12 +65,21 @@ namespace DrawDotNet
             };
 
             var tickRate = 60;
-            bool printLog = false;
+            bool printLog = true;
 
             renderThread = new FixedRateLooper("render-thread", tickRate, renderLoop, printLog);
             updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() =>
                 { foreach (var e in entities) e.Update(); }), printLog);
             eventThread = new FixedRateLooper("event-thread", -1, eventLoop, printLog);
+
+            WindowLifecycle = new Task(() =>
+            {
+                if (!renderIsInit) init();
+                SDL.SDL_ShowWindow(WindowPtr);
+                updateThread.Start();
+                renderThread.Start();
+                eventThread.StartSynchronous();
+            });
 
             this.title = title;
         }
@@ -93,10 +104,12 @@ namespace DrawDotNet
 
         public void Show()
         {
-            SDL.SDL_ShowWindow(WindowPtr);
-            updateThread.Start();
-            renderThread.Start();
-            eventThread.StartSynchronous();
+            WindowLifecycle.Start();
+        }
+
+        public void Join()
+        {
+            WindowLifecycle.Wait();
         }
 
         public void setPixel(int x, int y) 
@@ -148,7 +161,6 @@ namespace DrawDotNet
 
         private void renderLoop()
         {
-            if (!renderIsInit) init();
             Utilities.ColorHelpers.setRenderColour(RendererPtr, BackgroundColor);
             SDL.SDL_RenderFillRect(RendererPtr, ref backgroundArea);
             Utilities.ColorHelpers.setRenderColour(RendererPtr, DrawingColor);
