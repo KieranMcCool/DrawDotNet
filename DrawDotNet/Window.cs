@@ -77,8 +77,8 @@ namespace DrawDotNet
                 if (!renderIsInit) init();
                 SDL.SDL_ShowWindow(WindowPtr);
                 updateThread.Start();
-                renderThread.Start();
-                eventThread.StartSynchronous();
+                eventThread.Start();
+                renderThread.StartSynchronous();
             });
 
             this.title = title;
@@ -149,8 +149,7 @@ namespace DrawDotNet
                 if (leftMouseClick)
                 {
                     var rng = Utilities.Constants.RandomNumberGenerator;
-                    entities.Add(new Drawables.Line(new SDL.SDL_Point() { x = mouseLocation.X, y = mouseLocation.Y },
-                                                    new SDL.SDL_Point() { x = mouseLocation.X + 50, y = mouseLocation.Y + 50}));
+                    entities.Add(new Drawables.Rectangle(mouseLocation.X, mouseLocation.Y, rng.Next(50, 200), rng.Next(50, 200), true));
                 }
 
                 var quit = e.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE;
