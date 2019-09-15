@@ -20,7 +20,7 @@ namespace DrawDotNet.Utilities
 
         public FixedRateLooper(string name, long cyclesPerSecond, Action action, bool printLog): this(name, cyclesPerSecond, action)
         {
-            this.printLog = printLog;
+            this.printLog = false;
         }
 
         public FixedRateLooper(string name, long cyclesPerSecond, Action action): this(cyclesPerSecond, action)
@@ -42,7 +42,10 @@ namespace DrawDotNet.Utilities
 
         public void Join() 
         {
-            task.Wait();
+            try
+            {
+                task.Wait();
+            } catch (Exception) { }
         }
 
         public void Cancel()

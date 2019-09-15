@@ -25,8 +25,6 @@ namespace DrawDotNet
 
         bool renderIsInit = false;
 
-        Task WindowLifecycle;
-
         FixedRateLooper renderThread;
         FixedRateLooper updateThread;
         FixedRateLooper eventThread;
@@ -65,21 +63,12 @@ namespace DrawDotNet
             };
 
             var tickRate = 60;
-            bool printLog = true;
+            bool printLog = false;
 
             renderThread = new FixedRateLooper("render-thread", tickRate, renderLoop, printLog);
             updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() =>
                 { foreach (var e in entities) e.Update(); }), printLog);
-            eventThread = new FixedRateLooper("event-thread", -1, eventLoop, printLog);
-
-            WindowLifecycle = new Task(() =>
-            {
-                if (!renderIsInit) init();
-                SDL.SDL_ShowWindow(WindowPtr);
-                updateThread.Start();
-                eventThread.Start();
-                renderThread.StartSynchronous();
-            });
+            eventThread = new FixedRateLooper("event-thread", -1, eventLoop, false);
 
             this.title = title;
         }
@@ -101,14 +90,15 @@ namespace DrawDotNet
             renderIsInit = true;
         }
 
+
         public void Show()
         {
-            WindowLifecycle.Start();
-        }
+            SDL.SDL_ShowWindow(WindowPtr);
 
-        public void Join()
-        {
-            WindowLifecycle.Wait();
+            if (!renderIsInit) init();
+            updateThread.Start();
+            renderThread.Start();
+            eventThread.StartSynchronous();
         }
 
         public void setPixel(int x, int y) 
@@ -131,30 +121,30 @@ namespace DrawDotNet
         private void eventLoop()
         {
             SDL.SDL_Event e;
-            while (SDL.SDL_PollEvent(out e) == 1)
+            SDL.SDL_PollEvent(out e);
+
+            var leftMouseClick = e.button.state == 1 && e.button.button == 1;
+
+            var rightMouseClick = e.button.state == 1 && e.button.button == 3;
+            var mouseLocation = new Point(e.button.x, e.button.y);
+            var keyPressed = e.key.state == 1;
+            string key;
+            if (keyPressed)
             {
-
-                var leftMouseClick = e.button.state == 1 && e.button.button == 1;
-
-                var rightMouseClick = e.button.state == 1 && e.button.button == 3;
-                var mouseLocation = new Point(e.button.x, e.button.y);
-                var keyPressed = e.key.state == 1;
-                string key;
-                if (keyPressed)
-                {
-                    key = SDL.SDL_GetKeyName(e.key.keysym.sym);
-                    Console.WriteLine(key);
-                }
-
-                if (leftMouseClick)
-                {
-                    var rng = Utilities.Constants.RandomNumberGenerator;
-                    entities.Add(new Drawables.Rectangle(mouseLocation.X, mouseLocation.Y, rng.Next(50, 200), rng.Next(50, 200), true));
-                }
-
-                var quit = e.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE;
-                if (quit) Dispose();
+                key = SDL.SDL_GetKeyName(e.key.keysym.sym);
+                Console.WriteLine(key);
             }
+
+            if (leftMouseClick)
+            {
+                var rng = Utilities.Constants.RandomNumberGenerator;
+                entities.Add(new Drawables.Rectangle(mouseLocation.X, mouseLocation.Y,
+                    rng.Next(10, 300), rng.Next(10, 300), true));
+            }
+
+            var quit = e.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE;
+            if (quit) Dispose();
+
         }
 
         private void renderLoop()

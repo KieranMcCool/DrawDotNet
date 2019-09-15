@@ -17,7 +17,6 @@ namespace DrawDotNetTestHarness
             int size = 800;
             var window = new Window("Test Window", size, size, Color.DodgerBlue);
             window.Show();
-            window.Join();
         }
     }
 }
