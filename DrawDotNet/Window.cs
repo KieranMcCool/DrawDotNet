@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Drawing;
-using SDL2;
-using DrawDotNet.Interfaces;
 using DrawDotNet.Drawables;
+using DrawDotNet.Interfaces;
 using DrawDotNet.Utilities;
+using SDL2;
 
 namespace DrawDotNet
 {
@@ -34,13 +34,12 @@ namespace DrawDotNet
         Color DrawingColor;
         Color BackgroundColor;
 
-
         #region constructors
         /* Constructors
          * ============ */
 
-        public Window(string title, int width, int height) : 
-        this(title, width, height, Color.Black) { }
+        public Window(string title, int width, int height):
+            this(title, width, height, Color.Black) { }
 
         public Window(string title, int width, int height, Color backgroundColour)
         {
@@ -52,7 +51,7 @@ namespace DrawDotNet
 
             if (SDL.SDL_WasInit(SDL.SDL_INIT_VIDEO) == 0)
                 SDL.SDL_Init(SDL.SDL_INIT_VIDEO);
-            
+
             BackgroundColor = backgroundColour;
             backgroundArea = new SDL.SDL_Rect()
             {
@@ -62,17 +61,15 @@ namespace DrawDotNet
                 h = Height
             };
 
-            var tickRate = 60;
+            var tickRate = -1;
             bool printLog = false;
 
-            renderThread = new FixedRateLooper("render-thread", tickRate, renderLoop, printLog);
-            updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() =>
-                { foreach (var e in entities) e.Update(); }), printLog);
-            eventThread = new FixedRateLooper("event-thread", -1, eventLoop, false);
+            renderThread = new FixedRateLooper("render-thread", tickRate, eventLoop, printLog);
+            updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() => { foreach (var e in entities) e.Update(); }), printLog);
 
             this.title = title;
         }
-#endregion
+        #endregion
 
         private void init()
         {
@@ -90,25 +87,24 @@ namespace DrawDotNet
             renderIsInit = true;
         }
 
-
         public void Show()
         {
             SDL.SDL_ShowWindow(WindowPtr);
 
             if (!renderIsInit) init();
             updateThread.Start();
-            renderThread.Start();
-            eventThread.StartSynchronous();
+            renderThread.StartSynchronous();
         }
 
-        public void setPixel(int x, int y) 
+        public void setPixel(int x, int y)
         {
             SDL.SDL_RenderDrawPoint(RendererPtr, x, y);
         }
 
         public void Dispose()
         {
-            renderThread.Cancel(); updateThread.Cancel(); eventThread.Cancel();
+            renderThread.Cancel();
+            updateThread.Cancel();
             SDL.SDL_DestroyRenderer(RendererPtr);
             SDL.SDL_DestroyWindow(WindowPtr);
         }
@@ -121,29 +117,34 @@ namespace DrawDotNet
         private void eventLoop()
         {
             SDL.SDL_Event e;
-            SDL.SDL_PollEvent(out e);
 
-            var leftMouseClick = e.button.state == 1 && e.button.button == 1;
-
-            var rightMouseClick = e.button.state == 1 && e.button.button == 3;
-            var mouseLocation = new Point(e.button.x, e.button.y);
-            var keyPressed = e.key.state == 1;
-            string key;
-            if (keyPressed)
+            while (SDL.SDL_PollEvent(out e) != 0)
             {
-                key = SDL.SDL_GetKeyName(e.key.keysym.sym);
-                Console.WriteLine(key);
+
+                var leftMouseClick = e.button.state == 1 && e.button.button == 1;
+
+                var rightMouseClick = e.button.state == 1 && e.button.button == 3;
+                var mouseLocation = new Point(e.button.x, e.button.y);
+                var keyPressed = e.key.state == 1;
+                string key;
+                if (keyPressed)
+                {
+                    key = SDL.SDL_GetKeyName(e.key.keysym.sym);
+                    Console.WriteLine(key);
+                }
+
+                if (leftMouseClick)
+                {
+                    var rng = Utilities.Constants.RandomNumberGenerator;
+                    entities.Add(new Drawables.Rectangle(mouseLocation.X, mouseLocation.Y,
+                        rng.Next(10, 300), rng.Next(10, 300), true));
+                }
+
+                var quit = e.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE;
+                if (quit) Dispose();
             }
 
-            if (leftMouseClick)
-            {
-                var rng = Utilities.Constants.RandomNumberGenerator;
-                entities.Add(new Drawables.Rectangle(mouseLocation.X, mouseLocation.Y,
-                    rng.Next(10, 300), rng.Next(10, 300), true));
-            }
-
-            var quit = e.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE;
-            if (quit) Dispose();
+            renderLoop();
 
         }
 
@@ -154,6 +155,7 @@ namespace DrawDotNet
             Utilities.ColorHelpers.setRenderColour(RendererPtr, DrawingColor);
             foreach (IDrawable d in entities) d.Draw(RendererPtr, DrawingColor);
             SDL.SDL_RenderPresent(RendererPtr);
+            eventLoop();
         }
 
         #region properties

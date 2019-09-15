@@ -86,10 +86,7 @@ namespace SDL2
 		/// <returns>Returns a pointer to the SDL_RWops structure that is created, or NULL on failure; call SDL_GetError() for more information.</returns>
 		[DllImport(nativeLibName, EntryPoint = "SDL_RWFromFile", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern IntPtr INTERNAL_SDL_RWFromFile(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string file,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string mode
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string file, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string mode
 		);
 
 		/* These are the public RWops functions. They should be used by
@@ -114,13 +111,13 @@ namespace SDL2
 
 		#region SDL.h
 
-		public const uint SDL_INIT_TIMER =		0x00000001;
-		public const uint SDL_INIT_AUDIO =		0x00000010;
-		public const uint SDL_INIT_VIDEO =		0x00000020;
-		public const uint SDL_INIT_JOYSTICK =		0x00000200;
-		public const uint SDL_INIT_HAPTIC =		0x00001000;
-		public const uint SDL_INIT_GAMECONTROLLER =	0x00002000;
-		public const uint SDL_INIT_NOPARACHUTE =	0x00100000;
+		public const uint SDL_INIT_TIMER = 0x00000001;
+		public const uint SDL_INIT_AUDIO = 0x00000010;
+		public const uint SDL_INIT_VIDEO = 0x00000020;
+		public const uint SDL_INIT_JOYSTICK = 0x00000200;
+		public const uint SDL_INIT_HAPTIC = 0x00001000;
+		public const uint SDL_INIT_GAMECONTROLLER = 0x00002000;
+		public const uint SDL_INIT_NOPARACHUTE = 0x00100000;
 		public const uint SDL_INIT_EVERYTHING = (
 			SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO |
 			SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC |
@@ -196,7 +193,9 @@ namespace SDL2
 		#region SDL_platform.h
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetPlatform();
 
 		#endregion
@@ -281,10 +280,11 @@ namespace SDL2
 		/// <a href="http://wiki.libsdl.org/moin.cgi/CategoryHints#Hints">CategoryHints</a> for details</param>
 		/// <returns>Returns the string value of a hint or NULL if the hint isn't set.</returns>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetHint(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string name
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string name
 		);
 
 		/// <summary>
@@ -299,10 +299,7 @@ namespace SDL2
 		/// override priority instead.</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_SetHint(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string name,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string value
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string name, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string value
 		);
 
 		/// <summary>
@@ -318,10 +315,7 @@ namespace SDL2
 		/// considered to have override priority. </remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_SetHintWithPriority(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string name,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string value,
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string name, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string value,
 			SDL_HintPriority priority
 		);
 
@@ -346,7 +340,9 @@ namespace SDL2
 		/// This string is statically allocated and must not be freed by the application.</returns>
 		/// <remarks>It is possible for multiple errors to occur before calling SDL_GetError(). Only the last error is returned. </remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetError();
 
 		/// <summary>
@@ -357,8 +353,7 @@ namespace SDL2
 		/// <remarks>Calling this function will replace any previous error message that was set.</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_SetError(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string fmt,
 			__arglist
 		);
 
@@ -438,8 +433,7 @@ namespace SDL2
 		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_Log(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string fmt,
 			__arglist
 		);
 
@@ -452,9 +446,7 @@ namespace SDL2
 		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_LogVerbose(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
+			int category, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string fmt,
 			__arglist
 		);
 
@@ -467,9 +459,7 @@ namespace SDL2
 		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_LogDebug(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
+			int category, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string fmt,
 			__arglist
 		);
 
@@ -482,9 +472,7 @@ namespace SDL2
 		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_LogInfo(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
+			int category, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string fmt,
 			__arglist
 		);
 
@@ -497,9 +485,7 @@ namespace SDL2
 		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_LogWarn(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
+			int category, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string fmt,
 			__arglist
 		);
 
@@ -512,9 +498,7 @@ namespace SDL2
 		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_LogError(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
+			int category, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string fmt,
 			__arglist
 		);
 
@@ -527,9 +511,7 @@ namespace SDL2
 		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_LogCritical(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
+			int category, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string fmt,
 			__arglist
 		);
 
@@ -545,9 +527,7 @@ namespace SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_LogMessage(
 			int category,
-			SDL_LogPriority priority,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
+			SDL_LogPriority priority, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string fmt,
 			__arglist
 		);
 
@@ -562,9 +542,7 @@ namespace SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_LogMessageV(
 			int category,
-			SDL_LogPriority priority,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
+			SDL_LogPriority priority, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string fmt,
 			__arglist
 		);
 
@@ -640,9 +618,9 @@ namespace SDL2
 		[Flags]
 		public enum SDL_MessageBoxFlags : uint
 		{
-			SDL_MESSAGEBOX_ERROR        = 0x00000010,
-			SDL_MESSAGEBOX_WARNING      = 0x00000020,
-			SDL_MESSAGEBOX_INFORMATION  = 0x00000040
+			SDL_MESSAGEBOX_ERROR = 0x00000010,
+			SDL_MESSAGEBOX_WARNING = 0x00000020,
+			SDL_MESSAGEBOX_INFORMATION = 0x00000040
 		}
 
 		[Flags]
@@ -687,32 +665,32 @@ namespace SDL2
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_MessageBoxColorScheme
 		{
-			[MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = (int)SDL_MessageBoxColorType.SDL_MESSAGEBOX_COLOR_MAX)]
-				public SDL_MessageBoxColor[] colors;
+			[MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = (int) SDL_MessageBoxColorType.SDL_MESSAGEBOX_COLOR_MAX)]
+			public SDL_MessageBoxColor[] colors;
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
 		private struct INTERNAL_SDL_MessageBoxData
 		{
 			public SDL_MessageBoxFlags flags;
-			public IntPtr window;				/* Parent window, can be NULL */
-			public IntPtr title;				/* UTF-8 title */
-			public IntPtr message;				/* UTF-8 message text */
+			public IntPtr window; /* Parent window, can be NULL */
+			public IntPtr title; /* UTF-8 title */
+			public IntPtr message; /* UTF-8 message text */
 			public int numbuttons;
 			public IntPtr buttons;
-			public IntPtr colorScheme;			/* Can be NULL to use system settings */
+			public IntPtr colorScheme; /* Can be NULL to use system settings */
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_MessageBoxData
 		{
 			public SDL_MessageBoxFlags flags;
-			public IntPtr window;							/* Parent window, can be NULL */
-			public string title;							/* UTF-8 title */
-			public string message;							/* UTF-8 message text */
+			public IntPtr window; /* Parent window, can be NULL */
+			public string title; /* UTF-8 title */
+			public string message; /* UTF-8 message text */
 			public int numbuttons;
 			public SDL_MessageBoxButtonData[] buttons;
-			public SDL_MessageBoxColorScheme? colorScheme;  /* Can be NULL to use system settings */
+			public SDL_MessageBoxColorScheme? colorScheme; /* Can be NULL to use system settings */
 		}
 
 		/// <summary>
@@ -737,10 +715,10 @@ namespace SDL2
 			var data = new INTERNAL_SDL_MessageBoxData()
 			{
 				flags = messageboxdata.flags,
-				window = messageboxdata.window,
-				title = utf8.MarshalManagedToNative(messageboxdata.title),
-				message = utf8.MarshalManagedToNative(messageboxdata.message),
-				numbuttons = messageboxdata.numbuttons,
+					window = messageboxdata.window,
+					title = utf8.MarshalManagedToNative(messageboxdata.title),
+					message = utf8.MarshalManagedToNative(messageboxdata.message),
+					numbuttons = messageboxdata.numbuttons,
 			};
 
 			var buttons = new INTERNAL_SDL_MessageBoxButtonData[messageboxdata.numbuttons];
@@ -749,8 +727,8 @@ namespace SDL2
 				buttons[i] = new INTERNAL_SDL_MessageBoxButtonData()
 				{
 					flags = messageboxdata.buttons[i].flags,
-					buttonid = messageboxdata.buttons[i].buttonid,
-					text = utf8.MarshalManagedToNative(messageboxdata.buttons[i].text),
+						buttonid = messageboxdata.buttons[i].buttonid,
+						text = utf8.MarshalManagedToNative(messageboxdata.buttons[i].text),
 				};
 			}
 
@@ -761,9 +739,9 @@ namespace SDL2
 			}
 
 			int result;
-			fixed (INTERNAL_SDL_MessageBoxButtonData* buttonsPtr = &buttons[0])
+			fixed(INTERNAL_SDL_MessageBoxButtonData * buttonsPtr = & buttons[0])
 			{
-				data.buttons = (IntPtr)buttonsPtr;
+				data.buttons = (IntPtr) buttonsPtr;
 				result = INTERNAL_SDL_ShowMessageBox(ref data, out buttonid);
 			}
 
@@ -788,11 +766,7 @@ namespace SDL2
 		/// <returns>0 on success or a negative error code on failure; call SDL_GetError() for more information. </returns>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_ShowSimpleMessageBox(
-			SDL_MessageBoxFlags flags,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string title,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string message,
+			SDL_MessageBoxFlags flags, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string title, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string message,
 			IntPtr window
 		);
 
@@ -804,9 +778,9 @@ namespace SDL2
 		 * running with. You will likely want to check this somewhere in your
 		 * program!
 		 */
-		public const int SDL_MAJOR_VERSION =	2;
-		public const int SDL_MINOR_VERSION =	0;
-		public const int SDL_PATCHLEVEL =	3;
+		public const int SDL_MAJOR_VERSION = 2;
+		public const int SDL_MINOR_VERSION = 0;
+		public const int SDL_PATCHLEVEL = 3;
 
 		public static readonly int SDL_COMPILEDVERSION = SDL_VERSIONNUM(
 			SDL_MAJOR_VERSION,
@@ -886,7 +860,9 @@ namespace SDL2
 		/// <remarks>This value is the revision of the code you are linked with and may be
 		/// different from the code you are compiling with, which is found in the constant SDL_REVISION.</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetRevision();
 
 		/// <summary>
@@ -908,10 +884,10 @@ namespace SDL2
 		[Flags]
 		public enum SDL_BlendMode
 		{
-			SDL_BLENDMODE_NONE =	0x00000000,
-			SDL_BLENDMODE_BLEND =	0x00000001,
-			SDL_BLENDMODE_ADD =	0x00000002,
-			SDL_BLENDMODE_MOD =	0x00000004
+			SDL_BLENDMODE_NONE = 0x00000000,
+			SDL_BLENDMODE_BLEND = 0x00000001,
+			SDL_BLENDMODE_ADD = 0x00000002,
+			SDL_BLENDMODE_MOD = 0x00000004
 		}
 
 		/// <summary>
@@ -951,9 +927,9 @@ namespace SDL2
 		[Flags]
 		public enum SDL_GLprofile
 		{
-			SDL_GL_CONTEXT_PROFILE_CORE				= 0x0001,
-			SDL_GL_CONTEXT_PROFILE_COMPATIBILITY	= 0x0002,
-			SDL_GL_CONTEXT_PROFILE_ES				= 0x0004
+			SDL_GL_CONTEXT_PROFILE_CORE = 0x0001,
+			SDL_GL_CONTEXT_PROFILE_COMPATIBILITY = 0x0002,
+			SDL_GL_CONTEXT_PROFILE_ES = 0x0004
 		}
 
 		/// <summary>
@@ -963,10 +939,10 @@ namespace SDL2
 		[Flags]
 		public enum SDL_GLcontext
 		{
-			SDL_GL_CONTEXT_DEBUG_FLAG				= 0x0001,
-			SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG	= 0x0002,
-			SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG		= 0x0004,
-			SDL_GL_CONTEXT_RESET_ISOLATION_FLAG		= 0x0008
+			SDL_GL_CONTEXT_DEBUG_FLAG = 0x0001,
+			SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG = 0x0002,
+			SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG = 0x0004,
+			SDL_GL_CONTEXT_RESET_ISOLATION_FLAG = 0x0008
 		}
 
 		/// <summary>
@@ -997,27 +973,27 @@ namespace SDL2
 		[Flags]
 		public enum SDL_WindowFlags : uint
 		{
-			SDL_WINDOW_FULLSCREEN =		0x00000001,
-			SDL_WINDOW_OPENGL =		0x00000002,
-			SDL_WINDOW_SHOWN =		0x00000004,
-			SDL_WINDOW_HIDDEN =		0x00000008,
-			SDL_WINDOW_BORDERLESS =		0x00000010,
-			SDL_WINDOW_RESIZABLE =		0x00000020,
-			SDL_WINDOW_MINIMIZED =		0x00000040,
-			SDL_WINDOW_MAXIMIZED =		0x00000080,
-			SDL_WINDOW_INPUT_GRABBED =	0x00000100,
-			SDL_WINDOW_INPUT_FOCUS =	0x00000200,
-			SDL_WINDOW_MOUSE_FOCUS =	0x00000400,
+			SDL_WINDOW_FULLSCREEN = 0x00000001,
+			SDL_WINDOW_OPENGL = 0x00000002,
+			SDL_WINDOW_SHOWN = 0x00000004,
+			SDL_WINDOW_HIDDEN = 0x00000008,
+			SDL_WINDOW_BORDERLESS = 0x00000010,
+			SDL_WINDOW_RESIZABLE = 0x00000020,
+			SDL_WINDOW_MINIMIZED = 0x00000040,
+			SDL_WINDOW_MAXIMIZED = 0x00000080,
+			SDL_WINDOW_INPUT_GRABBED = 0x00000100,
+			SDL_WINDOW_INPUT_FOCUS = 0x00000200,
+			SDL_WINDOW_MOUSE_FOCUS = 0x00000400,
 			SDL_WINDOW_FULLSCREEN_DESKTOP =
-				(SDL_WINDOW_FULLSCREEN | 0x00001000),
-			SDL_WINDOW_FOREIGN =		0x00000800,
-			SDL_WINDOW_ALLOW_HIGHDPI =	0x00002000	/* Only available in 2.0.1 */
+			(SDL_WINDOW_FULLSCREEN | 0x00001000),
+			SDL_WINDOW_FOREIGN = 0x00000800,
+			SDL_WINDOW_ALLOW_HIGHDPI = 0x00002000 /* Only available in 2.0.1 */
 		}
 
-		public const int SDL_WINDOWPOS_UNDEFINED_MASK =	0x1FFF0000;
-		public const int SDL_WINDOWPOS_CENTERED_MASK =	0x2FFF0000;
-		public const int SDL_WINDOWPOS_UNDEFINED =		0x1FFF0000;
-		public const int SDL_WINDOWPOS_CENTERED =		0x2FFF0000;
+		public const int SDL_WINDOWPOS_UNDEFINED_MASK = 0x1FFF0000;
+		public const int SDL_WINDOWPOS_CENTERED_MASK = 0x2FFF0000;
+		public const int SDL_WINDOWPOS_UNDEFINED = 0x1FFF0000;
+		public const int SDL_WINDOWPOS_CENTERED = 0x2FFF0000;
 
 		public static int SDL_WINDOWPOS_UNDEFINED_DISPLAY(int X)
 		{
@@ -1066,8 +1042,7 @@ namespace SDL2
 		/// for more information. (refers to an <see cref="SDL_Window"/>)</returns>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SDL_CreateWindow(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string title,
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string title,
 			int x,
 			int y,
 			int w,
@@ -1169,7 +1144,9 @@ namespace SDL2
 		/// runs fullscreen and has changed the resolution. In that case this function will return the
 		/// previous native display mode, and not the current display mode. </remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetCurrentVideoDriver();
 
 		/// <summary>
@@ -1255,7 +1232,9 @@ namespace SDL2
 		/// <returns>Returns the name of the video driver with the given index. </returns>
 		/// <remarks>The video drivers are presented in the order in which they are normally checked during initialization. </remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetVideoDriver(
 			int index
 		);
@@ -1278,9 +1257,7 @@ namespace SDL2
 		/// <returns>Returns the value associated with name. (void*)</returns>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SDL_GetWindowData(
-			IntPtr window,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string name
+			IntPtr window, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string name
 		);
 
 		/// <summary>
@@ -1328,13 +1305,7 @@ namespace SDL2
 		/* window refers to an SDL_Window* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_GetWindowGammaRamp(
-			IntPtr window,
-			[Out()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)]
-				ushort[] red,
-			[Out()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)]
-				ushort[] green,
-			[Out()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)]
-				ushort[] blue
+			IntPtr window, [Out()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)] ushort[] red, [Out()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)] ushort[] green, [Out()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)] ushort[] blue
 		);
 
 		/* window refers to an SDL_Window* */
@@ -1389,7 +1360,9 @@ namespace SDL2
 
 		/* window refers to an SDL_Window* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetWindowTitle(
 			IntPtr window
 		);
@@ -1413,14 +1386,12 @@ namespace SDL2
 		/* IntPtr refers to a function pointer */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SDL_GL_GetProcAddress(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string proc
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string proc
 		);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_GL_ExtensionSupported(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string extension
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string extension
 		);
 
 		/* Only available in SDL 2.0.2 or higher */
@@ -1509,9 +1480,7 @@ namespace SDL2
 		/* IntPtr and userdata are void*, window is an SDL_Window* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SDL_SetWindowData(
-			IntPtr window,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string name,
+			IntPtr window, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string name,
 			IntPtr userdata
 		);
 
@@ -1532,13 +1501,7 @@ namespace SDL2
 		/* window refers to an SDL_Window* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_SetWindowGammaRamp(
-			IntPtr window,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)]
-				ushort[] red,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)]
-				ushort[] green,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)]
-				ushort[] blue
+			IntPtr window, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)] ushort[] red, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)] ushort[] green, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)] ushort[] blue
 		);
 
 		/* window refers to an SDL_Window* */
@@ -1597,9 +1560,7 @@ namespace SDL2
 		/* window refers to an SDL_Window* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_SetWindowTitle(
-			IntPtr window,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string title
+			IntPtr window, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string title
 		);
 
 		/* window refers to an SDL_Window* */
@@ -1613,16 +1574,13 @@ namespace SDL2
 		/* window refers to an SDL_Window* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_UpdateWindowSurfaceRects(
-			IntPtr window,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)]
-				SDL_Rect[] rects,
+			IntPtr window, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)] SDL_Rect[] rects,
 			int numrects
 		);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_VideoInit(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string driver_name
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string driver_name
 		);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -1635,18 +1593,18 @@ namespace SDL2
 		[Flags]
 		public enum SDL_RendererFlags : uint
 		{
-			SDL_RENDERER_SOFTWARE =		0x00000001,
-			SDL_RENDERER_ACCELERATED =	0x00000002,
-			SDL_RENDERER_PRESENTVSYNC =	0x00000004,
-			SDL_RENDERER_TARGETTEXTURE =	0x00000008
+			SDL_RENDERER_SOFTWARE = 0x00000001,
+			SDL_RENDERER_ACCELERATED = 0x00000002,
+			SDL_RENDERER_PRESENTVSYNC = 0x00000004,
+			SDL_RENDERER_TARGETTEXTURE = 0x00000008
 		}
 
 		[Flags]
 		public enum SDL_RendererFlip
 		{
-			SDL_FLIP_NONE =		0x00000000,
-			SDL_FLIP_HORIZONTAL =	0x00000001,
-			SDL_FLIP_VERTICAL =	0x00000002
+			SDL_FLIP_NONE = 0x00000000,
+			SDL_FLIP_HORIZONTAL = 0x00000001,
+			SDL_FLIP_VERTICAL = 0x00000002
 		}
 
 		public enum SDL_TextureAccess
@@ -1659,9 +1617,9 @@ namespace SDL2
 		[Flags]
 		public enum SDL_TextureModulate
 		{
-			SDL_TEXTUREMODULATE_NONE =		0x00000000,
-			SDL_TEXTUREMODULATE_HORIZONTAL =	0x00000001,
-			SDL_TEXTUREMODULATE_VERTICAL =		0x00000002
+			SDL_TEXTUREMODULATE_NONE = 0x00000000,
+			SDL_TEXTUREMODULATE_HORIZONTAL = 0x00000001,
+			SDL_TEXTUREMODULATE_VERTICAL = 0x00000002
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -1919,9 +1877,7 @@ namespace SDL2
 		/* renderer refers to an SDL_Renderer* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_RenderDrawLines(
-			IntPtr renderer,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)]
-				SDL_Point[] points,
+			IntPtr renderer, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)] SDL_Point[] points,
 			int count
 		);
 
@@ -1936,9 +1892,7 @@ namespace SDL2
 		/* renderer refers to an SDL_Renderer* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_RenderDrawPoints(
-			IntPtr renderer,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)]
-				SDL_Point[] points,
+			IntPtr renderer, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)] SDL_Point[] points,
 			int count
 		);
 
@@ -1961,9 +1915,7 @@ namespace SDL2
 		/* renderer refers to an SDL_Renderer* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_RenderDrawRects(
-			IntPtr renderer,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)]
-				SDL_Rect[] rects,
+			IntPtr renderer, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)] SDL_Rect[] rects,
 			int count
 		);
 
@@ -1986,9 +1938,7 @@ namespace SDL2
 		/* renderer refers to an SDL_Renderer* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_RenderFillRects(
-			IntPtr renderer,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)]
-				SDL_Rect[] rects,
+			IntPtr renderer, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)] SDL_Rect[] rects,
 			int count
 		);
 
@@ -2160,7 +2110,8 @@ namespace SDL2
 			SDL_PACKEDLAYOUT_ENUM layout,
 			byte bits,
 			byte bytes
-		) {
+		)
+		{
 			return (uint) (
 				(1 << 28) |
 				(((byte) type) << 24) |
@@ -2200,9 +2151,9 @@ namespace SDL2
 		{
 			if (SDL_ISPIXELFORMAT_FOURCC(X))
 			{
-				if (	(X == SDL_PIXELFORMAT_YUY2) ||
-						(X == SDL_PIXELFORMAT_UYVY) ||
-						(X == SDL_PIXELFORMAT_YVYU)	)
+				if ((X == SDL_PIXELFORMAT_YUY2) ||
+					(X == SDL_PIXELFORMAT_UYVY) ||
+					(X == SDL_PIXELFORMAT_YVYU))
 				{
 					return 2;
 				}
@@ -2218,7 +2169,7 @@ namespace SDL2
 				return false;
 			}
 			SDL_PIXELTYPE_ENUM pType =
-					(SDL_PIXELTYPE_ENUM) SDL_PIXELTYPE(format);
+				(SDL_PIXELTYPE_ENUM) SDL_PIXELTYPE(format);
 			return (
 				pType == SDL_PIXELTYPE_ENUM.SDL_PIXELTYPE_INDEX1 ||
 				pType == SDL_PIXELTYPE_ENUM.SDL_PIXELTYPE_INDEX4 ||
@@ -2233,7 +2184,7 @@ namespace SDL2
 				return false;
 			}
 			SDL_PIXELORDER_ENUM pOrder =
-					(SDL_PIXELORDER_ENUM) SDL_PIXELORDER(format);
+				(SDL_PIXELORDER_ENUM) SDL_PIXELORDER(format);
 			return (
 				pOrder == SDL_PIXELORDER_ENUM.SDL_PACKEDORDER_ARGB ||
 				pOrder == SDL_PIXELORDER_ENUM.SDL_PACKEDORDER_RGBA ||
@@ -2515,23 +2466,43 @@ namespace SDL2
 			);
 		public static readonly uint SDL_PIXELFORMAT_YV12 =
 			SDL_DEFINE_PIXELFOURCC(
-				(byte) 'Y', (byte) 'V', (byte) '1', (byte) '2'
+				(byte)
+				'Y', (byte)
+				'V', (byte)
+				'1', (byte)
+				'2'
 			);
 		public static readonly uint SDL_PIXELFORMAT_IYUV =
 			SDL_DEFINE_PIXELFOURCC(
-				(byte) 'I', (byte) 'Y', (byte) 'U', (byte) 'V'
+				(byte)
+				'I', (byte)
+				'Y', (byte)
+				'U', (byte)
+				'V'
 			);
 		public static readonly uint SDL_PIXELFORMAT_YUY2 =
 			SDL_DEFINE_PIXELFOURCC(
-				(byte) 'Y', (byte) 'U', (byte) 'Y', (byte) '2'
+				(byte)
+				'Y', (byte)
+				'U', (byte)
+				'Y', (byte)
+				'2'
 			);
 		public static readonly uint SDL_PIXELFORMAT_UYVY =
 			SDL_DEFINE_PIXELFOURCC(
-				(byte) 'U', (byte) 'Y', (byte) 'V', (byte) 'Y'
+				(byte)
+				'U', (byte)
+				'Y', (byte)
+				'V', (byte)
+				'Y'
 			);
 		public static readonly uint SDL_PIXELFORMAT_YVYU =
 			SDL_DEFINE_PIXELFOURCC(
-				(byte) 'Y', (byte) 'V', (byte) 'Y', (byte) 'U'
+				(byte)
+				'Y', (byte)
+				'V', (byte)
+				'Y', (byte)
+				'U'
 			);
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -2585,9 +2556,7 @@ namespace SDL2
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_CalculateGammaRamp(
-			float gamma,
-			[Out()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)]
-				ushort[] ramp
+			float gamma, [Out()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U2, SizeConst = 256)] ushort[] ramp
 		);
 
 		/* format refers to an SDL_PixelFormat* */
@@ -2599,7 +2568,9 @@ namespace SDL2
 		public static extern void SDL_FreePalette(IntPtr palette);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetPixelFormatName(
 			uint format
 		);
@@ -2666,9 +2637,7 @@ namespace SDL2
 		/* palette refers to an SDL_Palette* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_SetPaletteColors(
-			IntPtr palette,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct)]
-				SDL_Color[] colors,
+			IntPtr palette, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct)] SDL_Color[] colors,
 			int firstcolor,
 			int ncolors
 		);
@@ -2702,8 +2671,7 @@ namespace SDL2
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_bool SDL_EnclosePoints(
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 1)]
-				SDL_Point[] points,
+			[In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 1)] SDL_Point[] points,
 			int count,
 			ref SDL_Rect clip,
 			out SDL_Rect result
@@ -2751,10 +2719,10 @@ namespace SDL2
 
 		#region SDL_surface.h
 
-		public const uint SDL_SWSURFACE =	0x00000000;
-		public const uint SDL_PREALLOC =	0x00000001;
-		public const uint SDL_RLEACCEL =	0x00000002;
-		public const uint SDL_DONTFREE =	0x00000004;
+		public const uint SDL_SWSURFACE = 0x00000000;
+		public const uint SDL_PREALLOC = 0x00000001;
+		public const uint SDL_RLEACCEL = 0x00000002;
+		public const uint SDL_DONTFREE = 0x00000004;
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct SDL_Surface
@@ -2950,9 +2918,7 @@ namespace SDL2
 		/* dst refers to an SDL_Surface* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_FillRects(
-			IntPtr dst,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)]
-				SDL_Rect[] rects,
+			IntPtr dst, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 2)] SDL_Rect[] rects,
 			int count,
 			uint color
 		);
@@ -3140,13 +3106,14 @@ namespace SDL2
 		public static extern SDL_bool SDL_HasClipboardText();
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetClipboardText();
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_SetClipboardText(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string text
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string text
 		);
 
 		#endregion
@@ -3154,8 +3121,8 @@ namespace SDL2
 		#region SDL_events.h
 
 		/* General keyboard/mouse state definitions. */
-		public const byte SDL_PRESSED =		1;
-		public const byte SDL_RELEASED =	0;
+		public const byte SDL_PRESSED = 1;
+		public const byte SDL_RELEASED = 0;
 
 		/* Default size is according to SDL2 default. */
 		public const int SDL_TEXTEDITINGEVENT_TEXT_SIZE = 32;
@@ -3164,29 +3131,29 @@ namespace SDL2
 		/* The types of events that can be delivered. */
 		public enum SDL_EventType : uint
 		{
-			SDL_FIRSTEVENT =		0,
+			SDL_FIRSTEVENT = 0,
 
 			/* Application events */
-			SDL_QUIT = 			0x100,
+			SDL_QUIT = 0x100,
 
 			/* Window events */
-			SDL_WINDOWEVENT = 		0x200,
+			SDL_WINDOWEVENT = 0x200,
 			SDL_SYSWMEVENT,
 
 			/* Keyboard events */
-			SDL_KEYDOWN = 			0x300,
+			SDL_KEYDOWN = 0x300,
 			SDL_KEYUP,
 			SDL_TEXTEDITING,
 			SDL_TEXTINPUT,
 
 			/* Mouse events */
-			SDL_MOUSEMOTION = 		0x400,
+			SDL_MOUSEMOTION = 0x400,
 			SDL_MOUSEBUTTONDOWN,
 			SDL_MOUSEBUTTONUP,
 			SDL_MOUSEWHEEL,
 
 			/* Joystick events */
-			SDL_JOYAXISMOTION =		0x600,
+			SDL_JOYAXISMOTION = 0x600,
 			SDL_JOYBALLMOTION,
 			SDL_JOYHATMOTION,
 			SDL_JOYBUTTONDOWN,
@@ -3195,7 +3162,7 @@ namespace SDL2
 			SDL_JOYDEVICEREMOVED,
 
 			/* Game controller events */
-			SDL_CONTROLLERAXISMOTION = 	0x650,
+			SDL_CONTROLLERAXISMOTION = 0x650,
 			SDL_CONTROLLERBUTTONDOWN,
 			SDL_CONTROLLERBUTTONUP,
 			SDL_CONTROLLERDEVICEADDED,
@@ -3203,33 +3170,33 @@ namespace SDL2
 			SDL_CONTROLLERDEVICEREMAPPED,
 
 			/* Touch events */
-			SDL_FINGERDOWN = 		0x700,
+			SDL_FINGERDOWN = 0x700,
 			SDL_FINGERUP,
 			SDL_FINGERMOTION,
 
 			/* Gesture events */
-			SDL_DOLLARGESTURE =		0x800,
+			SDL_DOLLARGESTURE = 0x800,
 			SDL_DOLLARRECORD,
 			SDL_MULTIGESTURE,
 
 			/* Clipboard events */
-			SDL_CLIPBOARDUPDATE =		0x900,
+			SDL_CLIPBOARDUPDATE = 0x900,
 
 			/* Drag and drop events */
-			SDL_DROPFILE =			0x1000,
+			SDL_DROPFILE = 0x1000,
 
 			/* Render events */
 			/* Only available in SDL 2.0.2 or higher */
-			SDL_RENDER_TARGETS_RESET =	0x2000,
+			SDL_RENDER_TARGETS_RESET = 0x2000,
 
 			/* Events SDL_USEREVENT through SDL_LASTEVENT are for
-			 * your use, and should be allocated with
-			 * SDL_RegisterEvents()
-			 */
-			SDL_USEREVENT =			0x8000,
+			* your use, and should be allocated with
+			* SDL_RegisterEvents()
+			*/
+			SDL_USEREVENT = 0x8000,
 
 			/* The last event, used for bouding arrays. */
-			SDL_LASTEVENT =			0xFFFF
+			SDL_LASTEVENT = 0xFFFF
 		}
 
 		/* Fields shared by every event */
@@ -3240,7 +3207,7 @@ namespace SDL2
 			public UInt32 timestamp;
 		}
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Window state change event data (event.window.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -3258,7 +3225,7 @@ namespace SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Keyboard button event structure (event.key.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -3295,7 +3262,7 @@ namespace SDL2
 			public fixed byte text[SDL_TEXTINPUTEVENT_TEXT_SIZE];
 		}
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Mouse motion event structure (event.motion.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -3316,7 +3283,7 @@ namespace SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Mouse button event structure (event.button.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -3347,7 +3314,7 @@ namespace SDL2
 			public Int32 y; /* amount scrolled vertically */
 		}
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Joystick axis motion event structure (event.jaxis.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -3365,7 +3332,7 @@ namespace SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Joystick trackball motion event structure (event.jball.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -3383,7 +3350,7 @@ namespace SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Joystick hat position change event struct (event.jhat.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -3399,7 +3366,7 @@ namespace SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Joystick button event structure (event.jbutton.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -3424,7 +3391,7 @@ namespace SDL2
 			public Int32 which; /* SDL_JoystickID */
 		}
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Game controller axis motion event (event.caxis.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -3442,7 +3409,7 @@ namespace SDL2
 		}
 #pragma warning restore 0169
 
-// Ignore private members used for padding in this struct
+		// Ignore private members used for padding in this struct
 #pragma warning disable 0169
 		/* Game controller button event (event.cbutton.*) */
 		[StructLayout(LayoutKind.Sequential)]
@@ -3464,7 +3431,8 @@ namespace SDL2
 		{
 			public SDL_EventType type;
 			public UInt32 timestamp;
-			public Int32 which; /* joystick id for ADDED, else
+			public Int32 which;
+			/* joystick id for ADDED, else
 					       instance id */
 		}
 
@@ -3621,8 +3589,7 @@ namespace SDL2
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_PeepEvents(
-			[Out()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 1)]
-				SDL_Event[] events,
+			[Out()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Struct, SizeParamIndex = 1)] SDL_Event[] events,
 			int numevents,
 			SDL_eventaction action,
 			SDL_EventType minType,
@@ -3702,10 +3669,10 @@ namespace SDL2
 		);
 
 		/* These are for SDL_EventState() */
-		public const int SDL_QUERY = 		-1;
-		public const int SDL_IGNORE = 		0;
-		public const int SDL_DISABLE =		0;
-		public const int SDL_ENABLE = 		1;
+		public const int SDL_QUERY = -1;
+		public const int SDL_IGNORE = 0;
+		public const int SDL_DISABLE = 0;
+		public const int SDL_ENABLE = 1;
 
 		/* This function allows you to enable/disable certain events */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -3993,7 +3960,7 @@ namespace SDL2
 			SDL_SCANCODE_APP2 = 284,
 
 			/* This is not a key, simply marks the number of scancodes
-			 * so that you know how big to make your arrays. */
+			* so that you know how big to make your arrays. */
 			SDL_NUM_SCANCODES = 512
 		}
 
@@ -4004,7 +3971,7 @@ namespace SDL2
 		public const int SDLK_SCANCODE_MASK = (1 << 30);
 		public static SDL_Keycode SDL_SCANCODE_TO_KEYCODE(SDL_Scancode X)
 		{
-			return (SDL_Keycode)((int)X | SDLK_SCANCODE_MASK);
+			return (SDL_Keycode) ((int) X | SDLK_SCANCODE_MASK);
 		}
 
 		/* So, in the C headers, SDL_Keycode is a typedef of Sint32
@@ -4088,194 +4055,194 @@ namespace SDL2
 			SDLK_y = 'y',
 			SDLK_z = 'z',
 
-			SDLK_CAPSLOCK = (int)SDL_Scancode.SDL_SCANCODE_CAPSLOCK | SDLK_SCANCODE_MASK,
+			SDLK_CAPSLOCK = (int) SDL_Scancode.SDL_SCANCODE_CAPSLOCK | SDLK_SCANCODE_MASK,
 
-			SDLK_F1 = (int)SDL_Scancode.SDL_SCANCODE_F1 | SDLK_SCANCODE_MASK,
-			SDLK_F2 = (int)SDL_Scancode.SDL_SCANCODE_F2 | SDLK_SCANCODE_MASK,
-			SDLK_F3 = (int)SDL_Scancode.SDL_SCANCODE_F3 | SDLK_SCANCODE_MASK,
-			SDLK_F4 = (int)SDL_Scancode.SDL_SCANCODE_F4 | SDLK_SCANCODE_MASK,
-			SDLK_F5 = (int)SDL_Scancode.SDL_SCANCODE_F5 | SDLK_SCANCODE_MASK,
-			SDLK_F6 = (int)SDL_Scancode.SDL_SCANCODE_F6 | SDLK_SCANCODE_MASK,
-			SDLK_F7 = (int)SDL_Scancode.SDL_SCANCODE_F7 | SDLK_SCANCODE_MASK,
-			SDLK_F8 = (int)SDL_Scancode.SDL_SCANCODE_F8 | SDLK_SCANCODE_MASK,
-			SDLK_F9 = (int)SDL_Scancode.SDL_SCANCODE_F9 | SDLK_SCANCODE_MASK,
-			SDLK_F10 = (int)SDL_Scancode.SDL_SCANCODE_F10 | SDLK_SCANCODE_MASK,
-			SDLK_F11 = (int)SDL_Scancode.SDL_SCANCODE_F11 | SDLK_SCANCODE_MASK,
-			SDLK_F12 = (int)SDL_Scancode.SDL_SCANCODE_F12 | SDLK_SCANCODE_MASK,
+			SDLK_F1 = (int) SDL_Scancode.SDL_SCANCODE_F1 | SDLK_SCANCODE_MASK,
+			SDLK_F2 = (int) SDL_Scancode.SDL_SCANCODE_F2 | SDLK_SCANCODE_MASK,
+			SDLK_F3 = (int) SDL_Scancode.SDL_SCANCODE_F3 | SDLK_SCANCODE_MASK,
+			SDLK_F4 = (int) SDL_Scancode.SDL_SCANCODE_F4 | SDLK_SCANCODE_MASK,
+			SDLK_F5 = (int) SDL_Scancode.SDL_SCANCODE_F5 | SDLK_SCANCODE_MASK,
+			SDLK_F6 = (int) SDL_Scancode.SDL_SCANCODE_F6 | SDLK_SCANCODE_MASK,
+			SDLK_F7 = (int) SDL_Scancode.SDL_SCANCODE_F7 | SDLK_SCANCODE_MASK,
+			SDLK_F8 = (int) SDL_Scancode.SDL_SCANCODE_F8 | SDLK_SCANCODE_MASK,
+			SDLK_F9 = (int) SDL_Scancode.SDL_SCANCODE_F9 | SDLK_SCANCODE_MASK,
+			SDLK_F10 = (int) SDL_Scancode.SDL_SCANCODE_F10 | SDLK_SCANCODE_MASK,
+			SDLK_F11 = (int) SDL_Scancode.SDL_SCANCODE_F11 | SDLK_SCANCODE_MASK,
+			SDLK_F12 = (int) SDL_Scancode.SDL_SCANCODE_F12 | SDLK_SCANCODE_MASK,
 
-			SDLK_PRINTSCREEN = (int)SDL_Scancode.SDL_SCANCODE_PRINTSCREEN | SDLK_SCANCODE_MASK,
-			SDLK_SCROLLLOCK = (int)SDL_Scancode.SDL_SCANCODE_SCROLLLOCK | SDLK_SCANCODE_MASK,
-			SDLK_PAUSE = (int)SDL_Scancode.SDL_SCANCODE_PAUSE | SDLK_SCANCODE_MASK,
-			SDLK_INSERT = (int)SDL_Scancode.SDL_SCANCODE_INSERT | SDLK_SCANCODE_MASK,
-			SDLK_HOME = (int)SDL_Scancode.SDL_SCANCODE_HOME | SDLK_SCANCODE_MASK,
-			SDLK_PAGEUP = (int)SDL_Scancode.SDL_SCANCODE_PAGEUP | SDLK_SCANCODE_MASK,
+			SDLK_PRINTSCREEN = (int) SDL_Scancode.SDL_SCANCODE_PRINTSCREEN | SDLK_SCANCODE_MASK,
+			SDLK_SCROLLLOCK = (int) SDL_Scancode.SDL_SCANCODE_SCROLLLOCK | SDLK_SCANCODE_MASK,
+			SDLK_PAUSE = (int) SDL_Scancode.SDL_SCANCODE_PAUSE | SDLK_SCANCODE_MASK,
+			SDLK_INSERT = (int) SDL_Scancode.SDL_SCANCODE_INSERT | SDLK_SCANCODE_MASK,
+			SDLK_HOME = (int) SDL_Scancode.SDL_SCANCODE_HOME | SDLK_SCANCODE_MASK,
+			SDLK_PAGEUP = (int) SDL_Scancode.SDL_SCANCODE_PAGEUP | SDLK_SCANCODE_MASK,
 			SDLK_DELETE = 127,
-			SDLK_END = (int)SDL_Scancode.SDL_SCANCODE_END | SDLK_SCANCODE_MASK,
-			SDLK_PAGEDOWN = (int)SDL_Scancode.SDL_SCANCODE_PAGEDOWN | SDLK_SCANCODE_MASK,
-			SDLK_RIGHT = (int)SDL_Scancode.SDL_SCANCODE_RIGHT | SDLK_SCANCODE_MASK,
-			SDLK_LEFT = (int)SDL_Scancode.SDL_SCANCODE_LEFT | SDLK_SCANCODE_MASK,
-			SDLK_DOWN = (int)SDL_Scancode.SDL_SCANCODE_DOWN | SDLK_SCANCODE_MASK,
-			SDLK_UP = (int)SDL_Scancode.SDL_SCANCODE_UP | SDLK_SCANCODE_MASK,
+			SDLK_END = (int) SDL_Scancode.SDL_SCANCODE_END | SDLK_SCANCODE_MASK,
+			SDLK_PAGEDOWN = (int) SDL_Scancode.SDL_SCANCODE_PAGEDOWN | SDLK_SCANCODE_MASK,
+			SDLK_RIGHT = (int) SDL_Scancode.SDL_SCANCODE_RIGHT | SDLK_SCANCODE_MASK,
+			SDLK_LEFT = (int) SDL_Scancode.SDL_SCANCODE_LEFT | SDLK_SCANCODE_MASK,
+			SDLK_DOWN = (int) SDL_Scancode.SDL_SCANCODE_DOWN | SDLK_SCANCODE_MASK,
+			SDLK_UP = (int) SDL_Scancode.SDL_SCANCODE_UP | SDLK_SCANCODE_MASK,
 
-			SDLK_NUMLOCKCLEAR = (int)SDL_Scancode.SDL_SCANCODE_NUMLOCKCLEAR | SDLK_SCANCODE_MASK,
-			SDLK_KP_DIVIDE = (int)SDL_Scancode.SDL_SCANCODE_KP_DIVIDE | SDLK_SCANCODE_MASK,
-			SDLK_KP_MULTIPLY = (int)SDL_Scancode.SDL_SCANCODE_KP_MULTIPLY | SDLK_SCANCODE_MASK,
-			SDLK_KP_MINUS = (int)SDL_Scancode.SDL_SCANCODE_KP_MINUS | SDLK_SCANCODE_MASK,
-			SDLK_KP_PLUS = (int)SDL_Scancode.SDL_SCANCODE_KP_PLUS | SDLK_SCANCODE_MASK,
-			SDLK_KP_ENTER = (int)SDL_Scancode.SDL_SCANCODE_KP_ENTER | SDLK_SCANCODE_MASK,
-			SDLK_KP_1 = (int)SDL_Scancode.SDL_SCANCODE_KP_1 | SDLK_SCANCODE_MASK,
-			SDLK_KP_2 = (int)SDL_Scancode.SDL_SCANCODE_KP_2 | SDLK_SCANCODE_MASK,
-			SDLK_KP_3 = (int)SDL_Scancode.SDL_SCANCODE_KP_3 | SDLK_SCANCODE_MASK,
-			SDLK_KP_4 = (int)SDL_Scancode.SDL_SCANCODE_KP_4 | SDLK_SCANCODE_MASK,
-			SDLK_KP_5 = (int)SDL_Scancode.SDL_SCANCODE_KP_5 | SDLK_SCANCODE_MASK,
-			SDLK_KP_6 = (int)SDL_Scancode.SDL_SCANCODE_KP_6 | SDLK_SCANCODE_MASK,
-			SDLK_KP_7 = (int)SDL_Scancode.SDL_SCANCODE_KP_7 | SDLK_SCANCODE_MASK,
-			SDLK_KP_8 = (int)SDL_Scancode.SDL_SCANCODE_KP_8 | SDLK_SCANCODE_MASK,
-			SDLK_KP_9 = (int)SDL_Scancode.SDL_SCANCODE_KP_9 | SDLK_SCANCODE_MASK,
-			SDLK_KP_0 = (int)SDL_Scancode.SDL_SCANCODE_KP_0 | SDLK_SCANCODE_MASK,
-			SDLK_KP_PERIOD = (int)SDL_Scancode.SDL_SCANCODE_KP_PERIOD | SDLK_SCANCODE_MASK,
+			SDLK_NUMLOCKCLEAR = (int) SDL_Scancode.SDL_SCANCODE_NUMLOCKCLEAR | SDLK_SCANCODE_MASK,
+			SDLK_KP_DIVIDE = (int) SDL_Scancode.SDL_SCANCODE_KP_DIVIDE | SDLK_SCANCODE_MASK,
+			SDLK_KP_MULTIPLY = (int) SDL_Scancode.SDL_SCANCODE_KP_MULTIPLY | SDLK_SCANCODE_MASK,
+			SDLK_KP_MINUS = (int) SDL_Scancode.SDL_SCANCODE_KP_MINUS | SDLK_SCANCODE_MASK,
+			SDLK_KP_PLUS = (int) SDL_Scancode.SDL_SCANCODE_KP_PLUS | SDLK_SCANCODE_MASK,
+			SDLK_KP_ENTER = (int) SDL_Scancode.SDL_SCANCODE_KP_ENTER | SDLK_SCANCODE_MASK,
+			SDLK_KP_1 = (int) SDL_Scancode.SDL_SCANCODE_KP_1 | SDLK_SCANCODE_MASK,
+			SDLK_KP_2 = (int) SDL_Scancode.SDL_SCANCODE_KP_2 | SDLK_SCANCODE_MASK,
+			SDLK_KP_3 = (int) SDL_Scancode.SDL_SCANCODE_KP_3 | SDLK_SCANCODE_MASK,
+			SDLK_KP_4 = (int) SDL_Scancode.SDL_SCANCODE_KP_4 | SDLK_SCANCODE_MASK,
+			SDLK_KP_5 = (int) SDL_Scancode.SDL_SCANCODE_KP_5 | SDLK_SCANCODE_MASK,
+			SDLK_KP_6 = (int) SDL_Scancode.SDL_SCANCODE_KP_6 | SDLK_SCANCODE_MASK,
+			SDLK_KP_7 = (int) SDL_Scancode.SDL_SCANCODE_KP_7 | SDLK_SCANCODE_MASK,
+			SDLK_KP_8 = (int) SDL_Scancode.SDL_SCANCODE_KP_8 | SDLK_SCANCODE_MASK,
+			SDLK_KP_9 = (int) SDL_Scancode.SDL_SCANCODE_KP_9 | SDLK_SCANCODE_MASK,
+			SDLK_KP_0 = (int) SDL_Scancode.SDL_SCANCODE_KP_0 | SDLK_SCANCODE_MASK,
+			SDLK_KP_PERIOD = (int) SDL_Scancode.SDL_SCANCODE_KP_PERIOD | SDLK_SCANCODE_MASK,
 
-			SDLK_APPLICATION = (int)SDL_Scancode.SDL_SCANCODE_APPLICATION | SDLK_SCANCODE_MASK,
-			SDLK_POWER = (int)SDL_Scancode.SDL_SCANCODE_POWER | SDLK_SCANCODE_MASK,
-			SDLK_KP_EQUALS = (int)SDL_Scancode.SDL_SCANCODE_KP_EQUALS | SDLK_SCANCODE_MASK,
-			SDLK_F13 = (int)SDL_Scancode.SDL_SCANCODE_F13 | SDLK_SCANCODE_MASK,
-			SDLK_F14 = (int)SDL_Scancode.SDL_SCANCODE_F14 | SDLK_SCANCODE_MASK,
-			SDLK_F15 = (int)SDL_Scancode.SDL_SCANCODE_F15 | SDLK_SCANCODE_MASK,
-			SDLK_F16 = (int)SDL_Scancode.SDL_SCANCODE_F16 | SDLK_SCANCODE_MASK,
-			SDLK_F17 = (int)SDL_Scancode.SDL_SCANCODE_F17 | SDLK_SCANCODE_MASK,
-			SDLK_F18 = (int)SDL_Scancode.SDL_SCANCODE_F18 | SDLK_SCANCODE_MASK,
-			SDLK_F19 = (int)SDL_Scancode.SDL_SCANCODE_F19 | SDLK_SCANCODE_MASK,
-			SDLK_F20 = (int)SDL_Scancode.SDL_SCANCODE_F20 | SDLK_SCANCODE_MASK,
-			SDLK_F21 = (int)SDL_Scancode.SDL_SCANCODE_F21 | SDLK_SCANCODE_MASK,
-			SDLK_F22 = (int)SDL_Scancode.SDL_SCANCODE_F22 | SDLK_SCANCODE_MASK,
-			SDLK_F23 = (int)SDL_Scancode.SDL_SCANCODE_F23 | SDLK_SCANCODE_MASK,
-			SDLK_F24 = (int)SDL_Scancode.SDL_SCANCODE_F24 | SDLK_SCANCODE_MASK,
-			SDLK_EXECUTE = (int)SDL_Scancode.SDL_SCANCODE_EXECUTE | SDLK_SCANCODE_MASK,
-			SDLK_HELP = (int)SDL_Scancode.SDL_SCANCODE_HELP | SDLK_SCANCODE_MASK,
-			SDLK_MENU = (int)SDL_Scancode.SDL_SCANCODE_MENU | SDLK_SCANCODE_MASK,
-			SDLK_SELECT = (int)SDL_Scancode.SDL_SCANCODE_SELECT | SDLK_SCANCODE_MASK,
-			SDLK_STOP = (int)SDL_Scancode.SDL_SCANCODE_STOP | SDLK_SCANCODE_MASK,
-			SDLK_AGAIN = (int)SDL_Scancode.SDL_SCANCODE_AGAIN | SDLK_SCANCODE_MASK,
-			SDLK_UNDO = (int)SDL_Scancode.SDL_SCANCODE_UNDO | SDLK_SCANCODE_MASK,
-			SDLK_CUT = (int)SDL_Scancode.SDL_SCANCODE_CUT | SDLK_SCANCODE_MASK,
-			SDLK_COPY = (int)SDL_Scancode.SDL_SCANCODE_COPY | SDLK_SCANCODE_MASK,
-			SDLK_PASTE = (int)SDL_Scancode.SDL_SCANCODE_PASTE | SDLK_SCANCODE_MASK,
-			SDLK_FIND = (int)SDL_Scancode.SDL_SCANCODE_FIND | SDLK_SCANCODE_MASK,
-			SDLK_MUTE = (int)SDL_Scancode.SDL_SCANCODE_MUTE | SDLK_SCANCODE_MASK,
-			SDLK_VOLUMEUP = (int)SDL_Scancode.SDL_SCANCODE_VOLUMEUP | SDLK_SCANCODE_MASK,
-			SDLK_VOLUMEDOWN = (int)SDL_Scancode.SDL_SCANCODE_VOLUMEDOWN | SDLK_SCANCODE_MASK,
-			SDLK_KP_COMMA = (int)SDL_Scancode.SDL_SCANCODE_KP_COMMA | SDLK_SCANCODE_MASK,
+			SDLK_APPLICATION = (int) SDL_Scancode.SDL_SCANCODE_APPLICATION | SDLK_SCANCODE_MASK,
+			SDLK_POWER = (int) SDL_Scancode.SDL_SCANCODE_POWER | SDLK_SCANCODE_MASK,
+			SDLK_KP_EQUALS = (int) SDL_Scancode.SDL_SCANCODE_KP_EQUALS | SDLK_SCANCODE_MASK,
+			SDLK_F13 = (int) SDL_Scancode.SDL_SCANCODE_F13 | SDLK_SCANCODE_MASK,
+			SDLK_F14 = (int) SDL_Scancode.SDL_SCANCODE_F14 | SDLK_SCANCODE_MASK,
+			SDLK_F15 = (int) SDL_Scancode.SDL_SCANCODE_F15 | SDLK_SCANCODE_MASK,
+			SDLK_F16 = (int) SDL_Scancode.SDL_SCANCODE_F16 | SDLK_SCANCODE_MASK,
+			SDLK_F17 = (int) SDL_Scancode.SDL_SCANCODE_F17 | SDLK_SCANCODE_MASK,
+			SDLK_F18 = (int) SDL_Scancode.SDL_SCANCODE_F18 | SDLK_SCANCODE_MASK,
+			SDLK_F19 = (int) SDL_Scancode.SDL_SCANCODE_F19 | SDLK_SCANCODE_MASK,
+			SDLK_F20 = (int) SDL_Scancode.SDL_SCANCODE_F20 | SDLK_SCANCODE_MASK,
+			SDLK_F21 = (int) SDL_Scancode.SDL_SCANCODE_F21 | SDLK_SCANCODE_MASK,
+			SDLK_F22 = (int) SDL_Scancode.SDL_SCANCODE_F22 | SDLK_SCANCODE_MASK,
+			SDLK_F23 = (int) SDL_Scancode.SDL_SCANCODE_F23 | SDLK_SCANCODE_MASK,
+			SDLK_F24 = (int) SDL_Scancode.SDL_SCANCODE_F24 | SDLK_SCANCODE_MASK,
+			SDLK_EXECUTE = (int) SDL_Scancode.SDL_SCANCODE_EXECUTE | SDLK_SCANCODE_MASK,
+			SDLK_HELP = (int) SDL_Scancode.SDL_SCANCODE_HELP | SDLK_SCANCODE_MASK,
+			SDLK_MENU = (int) SDL_Scancode.SDL_SCANCODE_MENU | SDLK_SCANCODE_MASK,
+			SDLK_SELECT = (int) SDL_Scancode.SDL_SCANCODE_SELECT | SDLK_SCANCODE_MASK,
+			SDLK_STOP = (int) SDL_Scancode.SDL_SCANCODE_STOP | SDLK_SCANCODE_MASK,
+			SDLK_AGAIN = (int) SDL_Scancode.SDL_SCANCODE_AGAIN | SDLK_SCANCODE_MASK,
+			SDLK_UNDO = (int) SDL_Scancode.SDL_SCANCODE_UNDO | SDLK_SCANCODE_MASK,
+			SDLK_CUT = (int) SDL_Scancode.SDL_SCANCODE_CUT | SDLK_SCANCODE_MASK,
+			SDLK_COPY = (int) SDL_Scancode.SDL_SCANCODE_COPY | SDLK_SCANCODE_MASK,
+			SDLK_PASTE = (int) SDL_Scancode.SDL_SCANCODE_PASTE | SDLK_SCANCODE_MASK,
+			SDLK_FIND = (int) SDL_Scancode.SDL_SCANCODE_FIND | SDLK_SCANCODE_MASK,
+			SDLK_MUTE = (int) SDL_Scancode.SDL_SCANCODE_MUTE | SDLK_SCANCODE_MASK,
+			SDLK_VOLUMEUP = (int) SDL_Scancode.SDL_SCANCODE_VOLUMEUP | SDLK_SCANCODE_MASK,
+			SDLK_VOLUMEDOWN = (int) SDL_Scancode.SDL_SCANCODE_VOLUMEDOWN | SDLK_SCANCODE_MASK,
+			SDLK_KP_COMMA = (int) SDL_Scancode.SDL_SCANCODE_KP_COMMA | SDLK_SCANCODE_MASK,
 			SDLK_KP_EQUALSAS400 =
-			(int)SDL_Scancode.SDL_SCANCODE_KP_EQUALSAS400 | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_KP_EQUALSAS400 | SDLK_SCANCODE_MASK,
 
-			SDLK_ALTERASE = (int)SDL_Scancode.SDL_SCANCODE_ALTERASE | SDLK_SCANCODE_MASK,
-			SDLK_SYSREQ = (int)SDL_Scancode.SDL_SCANCODE_SYSREQ | SDLK_SCANCODE_MASK,
-			SDLK_CANCEL = (int)SDL_Scancode.SDL_SCANCODE_CANCEL | SDLK_SCANCODE_MASK,
-			SDLK_CLEAR = (int)SDL_Scancode.SDL_SCANCODE_CLEAR | SDLK_SCANCODE_MASK,
-			SDLK_PRIOR = (int)SDL_Scancode.SDL_SCANCODE_PRIOR | SDLK_SCANCODE_MASK,
-			SDLK_RETURN2 = (int)SDL_Scancode.SDL_SCANCODE_RETURN2 | SDLK_SCANCODE_MASK,
-			SDLK_SEPARATOR = (int)SDL_Scancode.SDL_SCANCODE_SEPARATOR | SDLK_SCANCODE_MASK,
-			SDLK_OUT = (int)SDL_Scancode.SDL_SCANCODE_OUT | SDLK_SCANCODE_MASK,
-			SDLK_OPER = (int)SDL_Scancode.SDL_SCANCODE_OPER | SDLK_SCANCODE_MASK,
-			SDLK_CLEARAGAIN = (int)SDL_Scancode.SDL_SCANCODE_CLEARAGAIN | SDLK_SCANCODE_MASK,
-			SDLK_CRSEL = (int)SDL_Scancode.SDL_SCANCODE_CRSEL | SDLK_SCANCODE_MASK,
-			SDLK_EXSEL = (int)SDL_Scancode.SDL_SCANCODE_EXSEL | SDLK_SCANCODE_MASK,
+			SDLK_ALTERASE = (int) SDL_Scancode.SDL_SCANCODE_ALTERASE | SDLK_SCANCODE_MASK,
+			SDLK_SYSREQ = (int) SDL_Scancode.SDL_SCANCODE_SYSREQ | SDLK_SCANCODE_MASK,
+			SDLK_CANCEL = (int) SDL_Scancode.SDL_SCANCODE_CANCEL | SDLK_SCANCODE_MASK,
+			SDLK_CLEAR = (int) SDL_Scancode.SDL_SCANCODE_CLEAR | SDLK_SCANCODE_MASK,
+			SDLK_PRIOR = (int) SDL_Scancode.SDL_SCANCODE_PRIOR | SDLK_SCANCODE_MASK,
+			SDLK_RETURN2 = (int) SDL_Scancode.SDL_SCANCODE_RETURN2 | SDLK_SCANCODE_MASK,
+			SDLK_SEPARATOR = (int) SDL_Scancode.SDL_SCANCODE_SEPARATOR | SDLK_SCANCODE_MASK,
+			SDLK_OUT = (int) SDL_Scancode.SDL_SCANCODE_OUT | SDLK_SCANCODE_MASK,
+			SDLK_OPER = (int) SDL_Scancode.SDL_SCANCODE_OPER | SDLK_SCANCODE_MASK,
+			SDLK_CLEARAGAIN = (int) SDL_Scancode.SDL_SCANCODE_CLEARAGAIN | SDLK_SCANCODE_MASK,
+			SDLK_CRSEL = (int) SDL_Scancode.SDL_SCANCODE_CRSEL | SDLK_SCANCODE_MASK,
+			SDLK_EXSEL = (int) SDL_Scancode.SDL_SCANCODE_EXSEL | SDLK_SCANCODE_MASK,
 
-			SDLK_KP_00 = (int)SDL_Scancode.SDL_SCANCODE_KP_00 | SDLK_SCANCODE_MASK,
-			SDLK_KP_000 = (int)SDL_Scancode.SDL_SCANCODE_KP_000 | SDLK_SCANCODE_MASK,
+			SDLK_KP_00 = (int) SDL_Scancode.SDL_SCANCODE_KP_00 | SDLK_SCANCODE_MASK,
+			SDLK_KP_000 = (int) SDL_Scancode.SDL_SCANCODE_KP_000 | SDLK_SCANCODE_MASK,
 			SDLK_THOUSANDSSEPARATOR =
-			(int)SDL_Scancode.SDL_SCANCODE_THOUSANDSSEPARATOR | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_THOUSANDSSEPARATOR | SDLK_SCANCODE_MASK,
 			SDLK_DECIMALSEPARATOR =
-			(int)SDL_Scancode.SDL_SCANCODE_DECIMALSEPARATOR | SDLK_SCANCODE_MASK,
-			SDLK_CURRENCYUNIT = (int)SDL_Scancode.SDL_SCANCODE_CURRENCYUNIT | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_DECIMALSEPARATOR | SDLK_SCANCODE_MASK,
+			SDLK_CURRENCYUNIT = (int) SDL_Scancode.SDL_SCANCODE_CURRENCYUNIT | SDLK_SCANCODE_MASK,
 			SDLK_CURRENCYSUBUNIT =
-			(int)SDL_Scancode.SDL_SCANCODE_CURRENCYSUBUNIT | SDLK_SCANCODE_MASK,
-			SDLK_KP_LEFTPAREN = (int)SDL_Scancode.SDL_SCANCODE_KP_LEFTPAREN | SDLK_SCANCODE_MASK,
-			SDLK_KP_RIGHTPAREN = (int)SDL_Scancode.SDL_SCANCODE_KP_RIGHTPAREN | SDLK_SCANCODE_MASK,
-			SDLK_KP_LEFTBRACE = (int)SDL_Scancode.SDL_SCANCODE_KP_LEFTBRACE | SDLK_SCANCODE_MASK,
-			SDLK_KP_RIGHTBRACE = (int)SDL_Scancode.SDL_SCANCODE_KP_RIGHTBRACE | SDLK_SCANCODE_MASK,
-			SDLK_KP_TAB = (int)SDL_Scancode.SDL_SCANCODE_KP_TAB | SDLK_SCANCODE_MASK,
-			SDLK_KP_BACKSPACE = (int)SDL_Scancode.SDL_SCANCODE_KP_BACKSPACE | SDLK_SCANCODE_MASK,
-			SDLK_KP_A = (int)SDL_Scancode.SDL_SCANCODE_KP_A | SDLK_SCANCODE_MASK,
-			SDLK_KP_B = (int)SDL_Scancode.SDL_SCANCODE_KP_B | SDLK_SCANCODE_MASK,
-			SDLK_KP_C = (int)SDL_Scancode.SDL_SCANCODE_KP_C | SDLK_SCANCODE_MASK,
-			SDLK_KP_D = (int)SDL_Scancode.SDL_SCANCODE_KP_D | SDLK_SCANCODE_MASK,
-			SDLK_KP_E = (int)SDL_Scancode.SDL_SCANCODE_KP_E | SDLK_SCANCODE_MASK,
-			SDLK_KP_F = (int)SDL_Scancode.SDL_SCANCODE_KP_F | SDLK_SCANCODE_MASK,
-			SDLK_KP_XOR = (int)SDL_Scancode.SDL_SCANCODE_KP_XOR | SDLK_SCANCODE_MASK,
-			SDLK_KP_POWER = (int)SDL_Scancode.SDL_SCANCODE_KP_POWER | SDLK_SCANCODE_MASK,
-			SDLK_KP_PERCENT = (int)SDL_Scancode.SDL_SCANCODE_KP_PERCENT | SDLK_SCANCODE_MASK,
-			SDLK_KP_LESS = (int)SDL_Scancode.SDL_SCANCODE_KP_LESS | SDLK_SCANCODE_MASK,
-			SDLK_KP_GREATER = (int)SDL_Scancode.SDL_SCANCODE_KP_GREATER | SDLK_SCANCODE_MASK,
-			SDLK_KP_AMPERSAND = (int)SDL_Scancode.SDL_SCANCODE_KP_AMPERSAND | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_CURRENCYSUBUNIT | SDLK_SCANCODE_MASK,
+			SDLK_KP_LEFTPAREN = (int) SDL_Scancode.SDL_SCANCODE_KP_LEFTPAREN | SDLK_SCANCODE_MASK,
+			SDLK_KP_RIGHTPAREN = (int) SDL_Scancode.SDL_SCANCODE_KP_RIGHTPAREN | SDLK_SCANCODE_MASK,
+			SDLK_KP_LEFTBRACE = (int) SDL_Scancode.SDL_SCANCODE_KP_LEFTBRACE | SDLK_SCANCODE_MASK,
+			SDLK_KP_RIGHTBRACE = (int) SDL_Scancode.SDL_SCANCODE_KP_RIGHTBRACE | SDLK_SCANCODE_MASK,
+			SDLK_KP_TAB = (int) SDL_Scancode.SDL_SCANCODE_KP_TAB | SDLK_SCANCODE_MASK,
+			SDLK_KP_BACKSPACE = (int) SDL_Scancode.SDL_SCANCODE_KP_BACKSPACE | SDLK_SCANCODE_MASK,
+			SDLK_KP_A = (int) SDL_Scancode.SDL_SCANCODE_KP_A | SDLK_SCANCODE_MASK,
+			SDLK_KP_B = (int) SDL_Scancode.SDL_SCANCODE_KP_B | SDLK_SCANCODE_MASK,
+			SDLK_KP_C = (int) SDL_Scancode.SDL_SCANCODE_KP_C | SDLK_SCANCODE_MASK,
+			SDLK_KP_D = (int) SDL_Scancode.SDL_SCANCODE_KP_D | SDLK_SCANCODE_MASK,
+			SDLK_KP_E = (int) SDL_Scancode.SDL_SCANCODE_KP_E | SDLK_SCANCODE_MASK,
+			SDLK_KP_F = (int) SDL_Scancode.SDL_SCANCODE_KP_F | SDLK_SCANCODE_MASK,
+			SDLK_KP_XOR = (int) SDL_Scancode.SDL_SCANCODE_KP_XOR | SDLK_SCANCODE_MASK,
+			SDLK_KP_POWER = (int) SDL_Scancode.SDL_SCANCODE_KP_POWER | SDLK_SCANCODE_MASK,
+			SDLK_KP_PERCENT = (int) SDL_Scancode.SDL_SCANCODE_KP_PERCENT | SDLK_SCANCODE_MASK,
+			SDLK_KP_LESS = (int) SDL_Scancode.SDL_SCANCODE_KP_LESS | SDLK_SCANCODE_MASK,
+			SDLK_KP_GREATER = (int) SDL_Scancode.SDL_SCANCODE_KP_GREATER | SDLK_SCANCODE_MASK,
+			SDLK_KP_AMPERSAND = (int) SDL_Scancode.SDL_SCANCODE_KP_AMPERSAND | SDLK_SCANCODE_MASK,
 			SDLK_KP_DBLAMPERSAND =
-			(int)SDL_Scancode.SDL_SCANCODE_KP_DBLAMPERSAND | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_KP_DBLAMPERSAND | SDLK_SCANCODE_MASK,
 			SDLK_KP_VERTICALBAR =
-			(int)SDL_Scancode.SDL_SCANCODE_KP_VERTICALBAR | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_KP_VERTICALBAR | SDLK_SCANCODE_MASK,
 			SDLK_KP_DBLVERTICALBAR =
-			(int)SDL_Scancode.SDL_SCANCODE_KP_DBLVERTICALBAR | SDLK_SCANCODE_MASK,
-			SDLK_KP_COLON = (int)SDL_Scancode.SDL_SCANCODE_KP_COLON | SDLK_SCANCODE_MASK,
-			SDLK_KP_HASH = (int)SDL_Scancode.SDL_SCANCODE_KP_HASH | SDLK_SCANCODE_MASK,
-			SDLK_KP_SPACE = (int)SDL_Scancode.SDL_SCANCODE_KP_SPACE | SDLK_SCANCODE_MASK,
-			SDLK_KP_AT = (int)SDL_Scancode.SDL_SCANCODE_KP_AT | SDLK_SCANCODE_MASK,
-			SDLK_KP_EXCLAM = (int)SDL_Scancode.SDL_SCANCODE_KP_EXCLAM | SDLK_SCANCODE_MASK,
-			SDLK_KP_MEMSTORE = (int)SDL_Scancode.SDL_SCANCODE_KP_MEMSTORE | SDLK_SCANCODE_MASK,
-			SDLK_KP_MEMRECALL = (int)SDL_Scancode.SDL_SCANCODE_KP_MEMRECALL | SDLK_SCANCODE_MASK,
-			SDLK_KP_MEMCLEAR = (int)SDL_Scancode.SDL_SCANCODE_KP_MEMCLEAR | SDLK_SCANCODE_MASK,
-			SDLK_KP_MEMADD = (int)SDL_Scancode.SDL_SCANCODE_KP_MEMADD | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_KP_DBLVERTICALBAR | SDLK_SCANCODE_MASK,
+			SDLK_KP_COLON = (int) SDL_Scancode.SDL_SCANCODE_KP_COLON | SDLK_SCANCODE_MASK,
+			SDLK_KP_HASH = (int) SDL_Scancode.SDL_SCANCODE_KP_HASH | SDLK_SCANCODE_MASK,
+			SDLK_KP_SPACE = (int) SDL_Scancode.SDL_SCANCODE_KP_SPACE | SDLK_SCANCODE_MASK,
+			SDLK_KP_AT = (int) SDL_Scancode.SDL_SCANCODE_KP_AT | SDLK_SCANCODE_MASK,
+			SDLK_KP_EXCLAM = (int) SDL_Scancode.SDL_SCANCODE_KP_EXCLAM | SDLK_SCANCODE_MASK,
+			SDLK_KP_MEMSTORE = (int) SDL_Scancode.SDL_SCANCODE_KP_MEMSTORE | SDLK_SCANCODE_MASK,
+			SDLK_KP_MEMRECALL = (int) SDL_Scancode.SDL_SCANCODE_KP_MEMRECALL | SDLK_SCANCODE_MASK,
+			SDLK_KP_MEMCLEAR = (int) SDL_Scancode.SDL_SCANCODE_KP_MEMCLEAR | SDLK_SCANCODE_MASK,
+			SDLK_KP_MEMADD = (int) SDL_Scancode.SDL_SCANCODE_KP_MEMADD | SDLK_SCANCODE_MASK,
 			SDLK_KP_MEMSUBTRACT =
-			(int)SDL_Scancode.SDL_SCANCODE_KP_MEMSUBTRACT | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_KP_MEMSUBTRACT | SDLK_SCANCODE_MASK,
 			SDLK_KP_MEMMULTIPLY =
-			(int)SDL_Scancode.SDL_SCANCODE_KP_MEMMULTIPLY | SDLK_SCANCODE_MASK,
-			SDLK_KP_MEMDIVIDE = (int)SDL_Scancode.SDL_SCANCODE_KP_MEMDIVIDE | SDLK_SCANCODE_MASK,
-			SDLK_KP_PLUSMINUS = (int)SDL_Scancode.SDL_SCANCODE_KP_PLUSMINUS | SDLK_SCANCODE_MASK,
-			SDLK_KP_CLEAR = (int)SDL_Scancode.SDL_SCANCODE_KP_CLEAR | SDLK_SCANCODE_MASK,
-			SDLK_KP_CLEARENTRY = (int)SDL_Scancode.SDL_SCANCODE_KP_CLEARENTRY | SDLK_SCANCODE_MASK,
-			SDLK_KP_BINARY = (int)SDL_Scancode.SDL_SCANCODE_KP_BINARY | SDLK_SCANCODE_MASK,
-			SDLK_KP_OCTAL = (int)SDL_Scancode.SDL_SCANCODE_KP_OCTAL | SDLK_SCANCODE_MASK,
-			SDLK_KP_DECIMAL = (int)SDL_Scancode.SDL_SCANCODE_KP_DECIMAL | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_KP_MEMMULTIPLY | SDLK_SCANCODE_MASK,
+			SDLK_KP_MEMDIVIDE = (int) SDL_Scancode.SDL_SCANCODE_KP_MEMDIVIDE | SDLK_SCANCODE_MASK,
+			SDLK_KP_PLUSMINUS = (int) SDL_Scancode.SDL_SCANCODE_KP_PLUSMINUS | SDLK_SCANCODE_MASK,
+			SDLK_KP_CLEAR = (int) SDL_Scancode.SDL_SCANCODE_KP_CLEAR | SDLK_SCANCODE_MASK,
+			SDLK_KP_CLEARENTRY = (int) SDL_Scancode.SDL_SCANCODE_KP_CLEARENTRY | SDLK_SCANCODE_MASK,
+			SDLK_KP_BINARY = (int) SDL_Scancode.SDL_SCANCODE_KP_BINARY | SDLK_SCANCODE_MASK,
+			SDLK_KP_OCTAL = (int) SDL_Scancode.SDL_SCANCODE_KP_OCTAL | SDLK_SCANCODE_MASK,
+			SDLK_KP_DECIMAL = (int) SDL_Scancode.SDL_SCANCODE_KP_DECIMAL | SDLK_SCANCODE_MASK,
 			SDLK_KP_HEXADECIMAL =
-			(int)SDL_Scancode.SDL_SCANCODE_KP_HEXADECIMAL | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_KP_HEXADECIMAL | SDLK_SCANCODE_MASK,
 
-			SDLK_LCTRL = (int)SDL_Scancode.SDL_SCANCODE_LCTRL | SDLK_SCANCODE_MASK,
-			SDLK_LSHIFT = (int)SDL_Scancode.SDL_SCANCODE_LSHIFT | SDLK_SCANCODE_MASK,
-			SDLK_LALT = (int)SDL_Scancode.SDL_SCANCODE_LALT | SDLK_SCANCODE_MASK,
-			SDLK_LGUI = (int)SDL_Scancode.SDL_SCANCODE_LGUI | SDLK_SCANCODE_MASK,
-			SDLK_RCTRL = (int)SDL_Scancode.SDL_SCANCODE_RCTRL | SDLK_SCANCODE_MASK,
-			SDLK_RSHIFT = (int)SDL_Scancode.SDL_SCANCODE_RSHIFT | SDLK_SCANCODE_MASK,
-			SDLK_RALT = (int)SDL_Scancode.SDL_SCANCODE_RALT | SDLK_SCANCODE_MASK,
-			SDLK_RGUI = (int)SDL_Scancode.SDL_SCANCODE_RGUI | SDLK_SCANCODE_MASK,
+			SDLK_LCTRL = (int) SDL_Scancode.SDL_SCANCODE_LCTRL | SDLK_SCANCODE_MASK,
+			SDLK_LSHIFT = (int) SDL_Scancode.SDL_SCANCODE_LSHIFT | SDLK_SCANCODE_MASK,
+			SDLK_LALT = (int) SDL_Scancode.SDL_SCANCODE_LALT | SDLK_SCANCODE_MASK,
+			SDLK_LGUI = (int) SDL_Scancode.SDL_SCANCODE_LGUI | SDLK_SCANCODE_MASK,
+			SDLK_RCTRL = (int) SDL_Scancode.SDL_SCANCODE_RCTRL | SDLK_SCANCODE_MASK,
+			SDLK_RSHIFT = (int) SDL_Scancode.SDL_SCANCODE_RSHIFT | SDLK_SCANCODE_MASK,
+			SDLK_RALT = (int) SDL_Scancode.SDL_SCANCODE_RALT | SDLK_SCANCODE_MASK,
+			SDLK_RGUI = (int) SDL_Scancode.SDL_SCANCODE_RGUI | SDLK_SCANCODE_MASK,
 
-			SDLK_MODE = (int)SDL_Scancode.SDL_SCANCODE_MODE | SDLK_SCANCODE_MASK,
+			SDLK_MODE = (int) SDL_Scancode.SDL_SCANCODE_MODE | SDLK_SCANCODE_MASK,
 
-			SDLK_AUDIONEXT = (int)SDL_Scancode.SDL_SCANCODE_AUDIONEXT | SDLK_SCANCODE_MASK,
-			SDLK_AUDIOPREV = (int)SDL_Scancode.SDL_SCANCODE_AUDIOPREV | SDLK_SCANCODE_MASK,
-			SDLK_AUDIOSTOP = (int)SDL_Scancode.SDL_SCANCODE_AUDIOSTOP | SDLK_SCANCODE_MASK,
-			SDLK_AUDIOPLAY = (int)SDL_Scancode.SDL_SCANCODE_AUDIOPLAY | SDLK_SCANCODE_MASK,
-			SDLK_AUDIOMUTE = (int)SDL_Scancode.SDL_SCANCODE_AUDIOMUTE | SDLK_SCANCODE_MASK,
-			SDLK_MEDIASELECT = (int)SDL_Scancode.SDL_SCANCODE_MEDIASELECT | SDLK_SCANCODE_MASK,
-			SDLK_WWW = (int)SDL_Scancode.SDL_SCANCODE_WWW | SDLK_SCANCODE_MASK,
-			SDLK_MAIL = (int)SDL_Scancode.SDL_SCANCODE_MAIL | SDLK_SCANCODE_MASK,
-			SDLK_CALCULATOR = (int)SDL_Scancode.SDL_SCANCODE_CALCULATOR | SDLK_SCANCODE_MASK,
-			SDLK_COMPUTER = (int)SDL_Scancode.SDL_SCANCODE_COMPUTER | SDLK_SCANCODE_MASK,
-			SDLK_AC_SEARCH = (int)SDL_Scancode.SDL_SCANCODE_AC_SEARCH | SDLK_SCANCODE_MASK,
-			SDLK_AC_HOME = (int)SDL_Scancode.SDL_SCANCODE_AC_HOME | SDLK_SCANCODE_MASK,
-			SDLK_AC_BACK = (int)SDL_Scancode.SDL_SCANCODE_AC_BACK | SDLK_SCANCODE_MASK,
-			SDLK_AC_FORWARD = (int)SDL_Scancode.SDL_SCANCODE_AC_FORWARD | SDLK_SCANCODE_MASK,
-			SDLK_AC_STOP = (int)SDL_Scancode.SDL_SCANCODE_AC_STOP | SDLK_SCANCODE_MASK,
-			SDLK_AC_REFRESH = (int)SDL_Scancode.SDL_SCANCODE_AC_REFRESH | SDLK_SCANCODE_MASK,
-			SDLK_AC_BOOKMARKS = (int)SDL_Scancode.SDL_SCANCODE_AC_BOOKMARKS | SDLK_SCANCODE_MASK,
+			SDLK_AUDIONEXT = (int) SDL_Scancode.SDL_SCANCODE_AUDIONEXT | SDLK_SCANCODE_MASK,
+			SDLK_AUDIOPREV = (int) SDL_Scancode.SDL_SCANCODE_AUDIOPREV | SDLK_SCANCODE_MASK,
+			SDLK_AUDIOSTOP = (int) SDL_Scancode.SDL_SCANCODE_AUDIOSTOP | SDLK_SCANCODE_MASK,
+			SDLK_AUDIOPLAY = (int) SDL_Scancode.SDL_SCANCODE_AUDIOPLAY | SDLK_SCANCODE_MASK,
+			SDLK_AUDIOMUTE = (int) SDL_Scancode.SDL_SCANCODE_AUDIOMUTE | SDLK_SCANCODE_MASK,
+			SDLK_MEDIASELECT = (int) SDL_Scancode.SDL_SCANCODE_MEDIASELECT | SDLK_SCANCODE_MASK,
+			SDLK_WWW = (int) SDL_Scancode.SDL_SCANCODE_WWW | SDLK_SCANCODE_MASK,
+			SDLK_MAIL = (int) SDL_Scancode.SDL_SCANCODE_MAIL | SDLK_SCANCODE_MASK,
+			SDLK_CALCULATOR = (int) SDL_Scancode.SDL_SCANCODE_CALCULATOR | SDLK_SCANCODE_MASK,
+			SDLK_COMPUTER = (int) SDL_Scancode.SDL_SCANCODE_COMPUTER | SDLK_SCANCODE_MASK,
+			SDLK_AC_SEARCH = (int) SDL_Scancode.SDL_SCANCODE_AC_SEARCH | SDLK_SCANCODE_MASK,
+			SDLK_AC_HOME = (int) SDL_Scancode.SDL_SCANCODE_AC_HOME | SDLK_SCANCODE_MASK,
+			SDLK_AC_BACK = (int) SDL_Scancode.SDL_SCANCODE_AC_BACK | SDLK_SCANCODE_MASK,
+			SDLK_AC_FORWARD = (int) SDL_Scancode.SDL_SCANCODE_AC_FORWARD | SDLK_SCANCODE_MASK,
+			SDLK_AC_STOP = (int) SDL_Scancode.SDL_SCANCODE_AC_STOP | SDLK_SCANCODE_MASK,
+			SDLK_AC_REFRESH = (int) SDL_Scancode.SDL_SCANCODE_AC_REFRESH | SDLK_SCANCODE_MASK,
+			SDLK_AC_BOOKMARKS = (int) SDL_Scancode.SDL_SCANCODE_AC_BOOKMARKS | SDLK_SCANCODE_MASK,
 
 			SDLK_BRIGHTNESSDOWN =
-			(int)SDL_Scancode.SDL_SCANCODE_BRIGHTNESSDOWN | SDLK_SCANCODE_MASK,
-			SDLK_BRIGHTNESSUP = (int)SDL_Scancode.SDL_SCANCODE_BRIGHTNESSUP | SDLK_SCANCODE_MASK,
-			SDLK_DISPLAYSWITCH = (int)SDL_Scancode.SDL_SCANCODE_DISPLAYSWITCH | SDLK_SCANCODE_MASK,
+			(int) SDL_Scancode.SDL_SCANCODE_BRIGHTNESSDOWN | SDLK_SCANCODE_MASK,
+			SDLK_BRIGHTNESSUP = (int) SDL_Scancode.SDL_SCANCODE_BRIGHTNESSUP | SDLK_SCANCODE_MASK,
+			SDLK_DISPLAYSWITCH = (int) SDL_Scancode.SDL_SCANCODE_DISPLAYSWITCH | SDLK_SCANCODE_MASK,
 			SDLK_KBDILLUMTOGGLE =
-			(int)SDL_Scancode.SDL_SCANCODE_KBDILLUMTOGGLE | SDLK_SCANCODE_MASK,
-			SDLK_KBDILLUMDOWN = (int)SDL_Scancode.SDL_SCANCODE_KBDILLUMDOWN | SDLK_SCANCODE_MASK,
-			SDLK_KBDILLUMUP = (int)SDL_Scancode.SDL_SCANCODE_KBDILLUMUP | SDLK_SCANCODE_MASK,
-			SDLK_EJECT = (int)SDL_Scancode.SDL_SCANCODE_EJECT | SDLK_SCANCODE_MASK,
-			SDLK_SLEEP = (int)SDL_Scancode.SDL_SCANCODE_SLEEP | SDLK_SCANCODE_MASK
+			(int) SDL_Scancode.SDL_SCANCODE_KBDILLUMTOGGLE | SDLK_SCANCODE_MASK,
+			SDLK_KBDILLUMDOWN = (int) SDL_Scancode.SDL_SCANCODE_KBDILLUMDOWN | SDLK_SCANCODE_MASK,
+			SDLK_KBDILLUMUP = (int) SDL_Scancode.SDL_SCANCODE_KBDILLUMUP | SDLK_SCANCODE_MASK,
+			SDLK_EJECT = (int) SDL_Scancode.SDL_SCANCODE_EJECT | SDLK_SCANCODE_MASK,
+			SDLK_SLEEP = (int) SDL_Scancode.SDL_SCANCODE_SLEEP | SDLK_SCANCODE_MASK
 		}
 
 		/* Key modifiers (bitfield) */
@@ -4347,24 +4314,28 @@ namespace SDL2
 
 		/* Wrapper for SDL_GetScancodeName */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetScancodeName(SDL_Scancode scancode);
 
 		/* Get a scancode from a human-readable name */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_Scancode SDL_GetScancodeFromName(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string name
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string name
 		);
 
 		/* Wrapper for SDL_GetKeyName */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetKeyName(SDL_Keycode key);
 
 		/* Get a key code from a human-readable name */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_Keycode SDL_GetKeyFromName(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string name
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string name
 		);
 
 		/* Start accepting Unicode text input events, show keyboard */
@@ -4403,18 +4374,18 @@ namespace SDL2
 		/* System cursor types */
 		public enum SDL_SystemCursor
 		{
-			SDL_SYSTEM_CURSOR_ARROW,	// Arrow
-			SDL_SYSTEM_CURSOR_IBEAM,	// I-beam
-			SDL_SYSTEM_CURSOR_WAIT,		// Wait
-			SDL_SYSTEM_CURSOR_CROSSHAIR,	// Crosshair
-			SDL_SYSTEM_CURSOR_WAITARROW,	// Small wait cursor (or Wait if not available)
-			SDL_SYSTEM_CURSOR_SIZENWSE,	// Double arrow pointing northwest and southeast
-			SDL_SYSTEM_CURSOR_SIZENESW,	// Double arrow pointing northeast and southwest
-			SDL_SYSTEM_CURSOR_SIZEWE,	// Double arrow pointing west and east
-			SDL_SYSTEM_CURSOR_SIZENS,	// Double arrow pointing north and south
-			SDL_SYSTEM_CURSOR_SIZEALL,	// Four pointed arrow pointing north, south, east, and west
-			SDL_SYSTEM_CURSOR_NO,		// Slashed circle or crossbones
-			SDL_SYSTEM_CURSOR_HAND,		// Hand
+			SDL_SYSTEM_CURSOR_ARROW, // Arrow
+			SDL_SYSTEM_CURSOR_IBEAM, // I-beam
+			SDL_SYSTEM_CURSOR_WAIT, // Wait
+			SDL_SYSTEM_CURSOR_CROSSHAIR, // Crosshair
+			SDL_SYSTEM_CURSOR_WAITARROW, // Small wait cursor (or Wait if not available)
+			SDL_SYSTEM_CURSOR_SIZENWSE, // Double arrow pointing northwest and southeast
+			SDL_SYSTEM_CURSOR_SIZENESW, // Double arrow pointing northeast and southwest
+			SDL_SYSTEM_CURSOR_SIZEWE, // Double arrow pointing west and east
+			SDL_SYSTEM_CURSOR_SIZENS, // Double arrow pointing north and south
+			SDL_SYSTEM_CURSOR_SIZEALL, // Four pointed arrow pointing north, south, east, and west
+			SDL_SYSTEM_CURSOR_NO, // Slashed circle or crossbones
+			SDL_SYSTEM_CURSOR_HAND, // Hand
 			SDL_NUM_SYSTEM_CURSORS
 		}
 
@@ -4511,16 +4482,16 @@ namespace SDL2
 			return (uint) (1 << ((int) X - 1));
 		}
 
-		public const uint SDL_BUTTON_LEFT =	1;
-		public const uint SDL_BUTTON_MIDDLE =	2;
-		public const uint SDL_BUTTON_RIGHT =	3;
-		public const uint SDL_BUTTON_X1 =	4;
-		public const uint SDL_BUTTON_X2 =	5;
-		public static readonly UInt32 SDL_BUTTON_LMASK =	SDL_BUTTON(SDL_BUTTON_LEFT);
-		public static readonly UInt32 SDL_BUTTON_MMASK =	SDL_BUTTON(SDL_BUTTON_MIDDLE);
-		public static readonly UInt32 SDL_BUTTON_RMASK =	SDL_BUTTON(SDL_BUTTON_RIGHT);
-		public static readonly UInt32 SDL_BUTTON_X1MASK =	SDL_BUTTON(SDL_BUTTON_X1);
-		public static readonly UInt32 SDL_BUTTON_X2MASK =	SDL_BUTTON(SDL_BUTTON_X2);
+		public const uint SDL_BUTTON_LEFT = 1;
+		public const uint SDL_BUTTON_MIDDLE = 2;
+		public const uint SDL_BUTTON_RIGHT = 3;
+		public const uint SDL_BUTTON_X1 = 4;
+		public const uint SDL_BUTTON_X2 = 5;
+		public static readonly UInt32 SDL_BUTTON_LMASK = SDL_BUTTON(SDL_BUTTON_LEFT);
+		public static readonly UInt32 SDL_BUTTON_MMASK = SDL_BUTTON(SDL_BUTTON_MIDDLE);
+		public static readonly UInt32 SDL_BUTTON_RMASK = SDL_BUTTON(SDL_BUTTON_RIGHT);
+		public static readonly UInt32 SDL_BUTTON_X1MASK = SDL_BUTTON(SDL_BUTTON_X1);
+		public static readonly UInt32 SDL_BUTTON_X2MASK = SDL_BUTTON(SDL_BUTTON_X2);
 
 		#endregion
 
@@ -4538,7 +4509,7 @@ namespace SDL2
 
 		/**
 		 *  \brief Get the number of registered touch devices.
- 		 */
+		 */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_GetNumTouchDevices();
 
@@ -4565,15 +4536,15 @@ namespace SDL2
 
 		#region SDL_joystick.h
 
-		public const byte SDL_HAT_CENTERED =	0x00;
-		public const byte SDL_HAT_UP =		0x01;
-		public const byte SDL_HAT_RIGHT =	0x02;
-		public const byte SDL_HAT_DOWN =	0x04;
-		public const byte SDL_HAT_LEFT =	0x08;
-		public const byte SDL_HAT_RIGHTUP =	SDL_HAT_RIGHT | SDL_HAT_UP;
-		public const byte SDL_HAT_RIGHTDOWN =	SDL_HAT_RIGHT | SDL_HAT_DOWN;
-		public const byte SDL_HAT_LEFTUP =	SDL_HAT_LEFT | SDL_HAT_UP;
-		public const byte SDL_HAT_LEFTDOWN =	SDL_HAT_LEFT | SDL_HAT_DOWN;
+		public const byte SDL_HAT_CENTERED = 0x00;
+		public const byte SDL_HAT_UP = 0x01;
+		public const byte SDL_HAT_RIGHT = 0x02;
+		public const byte SDL_HAT_DOWN = 0x04;
+		public const byte SDL_HAT_LEFT = 0x08;
+		public const byte SDL_HAT_RIGHTUP = SDL_HAT_RIGHT | SDL_HAT_UP;
+		public const byte SDL_HAT_RIGHTDOWN = SDL_HAT_RIGHT | SDL_HAT_DOWN;
+		public const byte SDL_HAT_LEFTUP = SDL_HAT_LEFT | SDL_HAT_UP;
+		public const byte SDL_HAT_LEFTDOWN = SDL_HAT_LEFT | SDL_HAT_DOWN;
 
 		/* joystick refers to an SDL_Joystick* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -4614,13 +4585,17 @@ namespace SDL2
 
 		/* joystick refers to an SDL_Joystick* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_JoystickName(
 			IntPtr joystick
 		);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_JoystickNameForIndex(
 			int device_index
 		);
@@ -4677,8 +4652,7 @@ namespace SDL2
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern Guid SDL_JoystickGetGUIDFromString(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string pchGUID
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string pchGUID
 		);
 
 		/* joystick refers to an SDL_Joystick* */
@@ -4759,8 +4733,7 @@ namespace SDL2
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_GameControllerAddMapping(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string mappingString
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string mappingString
 		);
 
 		/* THIS IS AN RWops FUNCTION! */
@@ -4776,14 +4749,18 @@ namespace SDL2
 		}
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GameControllerMappingForGUID(
 			Guid guid
 		);
 
 		/* gamecontroller refers to an SDL_GameController* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GameControllerMapping(
 			IntPtr gamecontroller
 		);
@@ -4792,7 +4769,9 @@ namespace SDL2
 		public static extern SDL_bool SDL_IsGameController(int joystick_index);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GameControllerNameForIndex(
 			int joystick_index
 		);
@@ -4803,7 +4782,9 @@ namespace SDL2
 
 		/* gamecontroller refers to an SDL_GameController* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GameControllerName(
 			IntPtr gamecontroller
 		);
@@ -4830,12 +4811,13 @@ namespace SDL2
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_GameControllerAxis SDL_GameControllerGetAxisFromString(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string pchString
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string pchString
 		);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GameControllerGetStringForAxis(
 			SDL_GameControllerAxis axis
 		);
@@ -4856,12 +4838,13 @@ namespace SDL2
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_GameControllerButton SDL_GameControllerGetButtonFromString(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string pchString
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string pchString
 		);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GameControllerGetStringForButton(
 			SDL_GameControllerButton button
 		);
@@ -4891,26 +4874,26 @@ namespace SDL2
 		#region SDL_haptic.h
 
 		/* SDL_HapticEffect type */
-		public const ushort SDL_HAPTIC_CONSTANT =	(1 << 0);
-		public const ushort SDL_HAPTIC_SINE =		(1 << 1);
-		public const ushort SDL_HAPTIC_LEFTRIGHT =	(1 << 2);
-		public const ushort SDL_HAPTIC_TRIANGLE =	(1 << 3);
-		public const ushort SDL_HAPTIC_SAWTOOTHUP =	(1 << 4);
-		public const ushort SDL_HAPTIC_SAWTOOTHDOWN =	(1 << 5);
-		public const ushort SDL_HAPTIC_SPRING =		(1 << 7);
-		public const ushort SDL_HAPTIC_DAMPER =		(1 << 8);
-		public const ushort SDL_HAPTIC_INERTIA =	(1 << 9);
-		public const ushort SDL_HAPTIC_FRICTION =	(1 << 10);
-		public const ushort SDL_HAPTIC_CUSTOM =		(1 << 11);
-		public const ushort SDL_HAPTIC_GAIN =		(1 << 12);
-		public const ushort SDL_HAPTIC_AUTOCENTER =	(1 << 13);
-		public const ushort SDL_HAPTIC_STATUS =		(1 << 14);
-		public const ushort SDL_HAPTIC_PAUSE =		(1 << 15);
+		public const ushort SDL_HAPTIC_CONSTANT = (1 << 0);
+		public const ushort SDL_HAPTIC_SINE = (1 << 1);
+		public const ushort SDL_HAPTIC_LEFTRIGHT = (1 << 2);
+		public const ushort SDL_HAPTIC_TRIANGLE = (1 << 3);
+		public const ushort SDL_HAPTIC_SAWTOOTHUP = (1 << 4);
+		public const ushort SDL_HAPTIC_SAWTOOTHDOWN = (1 << 5);
+		public const ushort SDL_HAPTIC_SPRING = (1 << 7);
+		public const ushort SDL_HAPTIC_DAMPER = (1 << 8);
+		public const ushort SDL_HAPTIC_INERTIA = (1 << 9);
+		public const ushort SDL_HAPTIC_FRICTION = (1 << 10);
+		public const ushort SDL_HAPTIC_CUSTOM = (1 << 11);
+		public const ushort SDL_HAPTIC_GAIN = (1 << 12);
+		public const ushort SDL_HAPTIC_AUTOCENTER = (1 << 13);
+		public const ushort SDL_HAPTIC_STATUS = (1 << 14);
+		public const ushort SDL_HAPTIC_PAUSE = (1 << 15);
 
 		/* SDL_HapticDirection type */
-		public const byte SDL_HAPTIC_POLAR =		0;
-		public const byte SDL_HAPTIC_CARTESIAN =	1;
-		public const byte SDL_HAPTIC_SPHERICAL =	2;
+		public const byte SDL_HAPTIC_POLAR = 0;
+		public const byte SDL_HAPTIC_CARTESIAN = 1;
+		public const byte SDL_HAPTIC_SPHERICAL = 2;
 
 		/* SDL_HapticRunEffect */
 		public const uint SDL_HAPTIC_INFINITY = 4292967295U;
@@ -5096,7 +5079,9 @@ namespace SDL2
 
 		/* haptic refers to an SDL_Haptic* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_HapticName(int device_index);
 
 		/* haptic refers to an SDL_Haptic* */
@@ -5222,10 +5207,10 @@ namespace SDL2
 
 		#region SDL_audio.h
 
-		public const ushort SDL_AUDIO_MASK_BITSIZE =	0xFF;
-		public const ushort SDL_AUDIO_MASK_DATATYPE =	(1 << 8);
-		public const ushort SDL_AUDIO_MASK_ENDIAN =	(1 << 12);
-		public const ushort SDL_AUDIO_MASK_SIGNED =	(1 << 15);
+		public const ushort SDL_AUDIO_MASK_BITSIZE = 0xFF;
+		public const ushort SDL_AUDIO_MASK_DATATYPE = (1 << 8);
+		public const ushort SDL_AUDIO_MASK_ENDIAN = (1 << 12);
+		public const ushort SDL_AUDIO_MASK_SIGNED = (1 << 15);
 
 		public static ushort SDL_AUDIO_BITSIZE(ushort x)
 		{
@@ -5262,20 +5247,20 @@ namespace SDL2
 			return (x & SDL_AUDIO_MASK_SIGNED) == 0;
 		}
 
-		public const ushort AUDIO_U8 =		0x0008;
-		public const ushort AUDIO_S8 =		0x8008;
-		public const ushort AUDIO_U16LSB =	0x0010;
-		public const ushort AUDIO_S16LSB =	0x8010;
-		public const ushort AUDIO_U16MSB =	0x1010;
-		public const ushort AUDIO_S16MSB =	0x9010;
-		public const ushort AUDIO_U16 =		AUDIO_U16LSB;
-		public const ushort AUDIO_S16 =		AUDIO_S16LSB;
-		public const ushort AUDIO_S32LSB =	0x8020;
-		public const ushort AUDIO_S32MSB =	0x9020;
-		public const ushort AUDIO_S32 =		AUDIO_S32LSB;
-		public const ushort AUDIO_F32LSB =	0x8120;
-		public const ushort AUDIO_F32MSB =	0x9120;
-		public const ushort AUDIO_F32 =		AUDIO_F32LSB;
+		public const ushort AUDIO_U8 = 0x0008;
+		public const ushort AUDIO_S8 = 0x8008;
+		public const ushort AUDIO_U16LSB = 0x0010;
+		public const ushort AUDIO_S16LSB = 0x8010;
+		public const ushort AUDIO_U16MSB = 0x1010;
+		public const ushort AUDIO_S16MSB = 0x9010;
+		public const ushort AUDIO_U16 = AUDIO_U16LSB;
+		public const ushort AUDIO_S16 = AUDIO_S16LSB;
+		public const ushort AUDIO_S32LSB = 0x8020;
+		public const ushort AUDIO_S32MSB = 0x9020;
+		public const ushort AUDIO_S32 = AUDIO_S32LSB;
+		public const ushort AUDIO_F32LSB = 0x8120;
+		public const ushort AUDIO_F32MSB = 0x9120;
+		public const ushort AUDIO_F32 = AUDIO_F32LSB;
 
 		public static readonly ushort AUDIO_U16SYS =
 			BitConverter.IsLittleEndian ? AUDIO_U16LSB : AUDIO_U16MSB;
@@ -5286,9 +5271,9 @@ namespace SDL2
 		public static readonly ushort AUDIO_F32SYS =
 			BitConverter.IsLittleEndian ? AUDIO_F32LSB : AUDIO_F32MSB;
 
-		public const uint SDL_AUDIO_ALLOW_FREQUENCY_CHANGE =	0x00000001;
-		public const uint SDL_AUDIO_ALLOW_FORMAT_CHANGE =	0x00000001;
-		public const uint SDL_AUDIO_ALLOW_CHANNELS_CHANGE =	0x00000001;
+		public const uint SDL_AUDIO_ALLOW_FREQUENCY_CHANGE = 0x00000001;
+		public const uint SDL_AUDIO_ALLOW_FORMAT_CHANGE = 0x00000001;
+		public const uint SDL_AUDIO_ALLOW_CHANNELS_CHANGE = 0x00000001;
 		public const uint SDL_AUDIO_ALLOW_ANY_CHANGE = (
 			SDL_AUDIO_ALLOW_FREQUENCY_CHANGE |
 			SDL_AUDIO_ALLOW_FORMAT_CHANGE |
@@ -5331,8 +5316,7 @@ namespace SDL2
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int SDL_AudioInit(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string driver_name
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string driver_name
 		);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -5350,7 +5334,9 @@ namespace SDL2
 		public static extern void SDL_FreeWAV(IntPtr audio_buf);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetAudioDeviceName(
 			int index,
 			int iscapture
@@ -5363,14 +5349,18 @@ namespace SDL2
 		);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetAudioDriver(int index);
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern SDL_AudioStatus SDL_GetAudioStatus();
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)
+		]
 		public static extern string SDL_GetCurrentAudioDriver();
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -5394,7 +5384,8 @@ namespace SDL2
 			ref SDL_AudioSpec spec,
 			out IntPtr audio_buf,
 			out uint audio_len
-		) {
+		)
+		{
 			SDL_AudioSpec result;
 			IntPtr rwops = INTERNAL_SDL_RWFromFile(file, "rb");
 			IntPtr result_ptr = INTERNAL_SDL_LoadWAV_RW(
@@ -5420,10 +5411,7 @@ namespace SDL2
 
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_MixAudio(
-			[Out()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 2)]
-				byte[] dst,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 2)]
-				byte[] src,
+			[Out()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 2)] byte[] dst, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 2)] byte[] src,
 			uint len,
 			int volume
 		);
@@ -5431,10 +5419,7 @@ namespace SDL2
 		/* format refers to an SDL_AudioFormat */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_MixAudioFormat(
-			[Out()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 3)]
-				byte[] dst,
-			[In()] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 3)]
-				byte[] src,
+			[Out()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 3)] byte[] dst, [In()][MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 3)] byte[] src,
 			ushort format,
 			uint len,
 			int volume
@@ -5449,8 +5434,7 @@ namespace SDL2
 		/* uint refers to an SDL_AudioDeviceID */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint SDL_OpenAudioDevice(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string device,
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string device,
 			int iscapture,
 			ref SDL_AudioSpec desired,
 			out SDL_AudioSpec obtained,
@@ -5487,7 +5471,7 @@ namespace SDL2
 		 */
 		public static bool SDL_TICKS_PASSED(UInt32 A, UInt32 B)
 		{
-			return ((Int32)(B - A) <= 0);
+			return ((Int32) (B - A) <= 0);
 		}
 
 		/* Delays the thread's processing based on the milliseconds parameter */
@@ -5623,7 +5607,9 @@ namespace SDL2
 		///
 		/// This function is only available in SDL 2.0.1 and later.</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))
+		]
 		public static extern string SDL_GetBasePath();
 
 		/// <summary>
@@ -5649,12 +5635,11 @@ namespace SDL2
 		///
 		/// This function is only available in SDL 2.0.1 and later.</remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
+		[
+			return :MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))
+		]
 		public static extern string SDL_GetPrefPath(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-			string org,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-			string app
+			[In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string org, [In()][MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))] string app
 		);
 
 		#endregion
