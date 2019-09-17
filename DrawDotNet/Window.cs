@@ -25,9 +25,8 @@ namespace DrawDotNet
 
         bool renderIsInit = false;
 
-        FixedRateLooper renderThread;
-        FixedRateLooper updateThread;
-        FixedRateLooper eventThread;
+        FixedRateLooper SdlThread;
+        FixedRateLooper UpdateThread;
 
         SDL.SDL_Rect backgroundArea;
 
@@ -64,14 +63,17 @@ namespace DrawDotNet
             var tickRate = -1;
             bool printLog = false;
 
-            renderThread = new FixedRateLooper("render-thread", tickRate, eventLoop, printLog);
-            updateThread = new FixedRateLooper("update-thread", tickRate, new Action(() => { foreach (var e in entities) e.Update(); }), printLog);
+            SdlThread = new FixedRateLooper("render-thread", tickRate, SDLLoop, printLog);
+            UpdateThread = new FixedRateLooper("update-thread", tickRate, UpdateLoop, printLog);
 
             this.title = title;
         }
         #endregion
 
-        private void init()
+        /// <summary>
+        /// Performas setup for window. Thisis called when the window is first shown.
+        /// </summary>
+        private void InitialiseWindow()
         {
             IntPtr window;
             IntPtr renderer;
@@ -87,45 +89,63 @@ namespace DrawDotNet
             renderIsInit = true;
         }
 
+        /// <summary>
+        /// Shows the window and starts its event loops if their not already started.
+        /// </summary>
         public void Show()
         {
             SDL.SDL_ShowWindow(WindowPtr);
 
-            if (!renderIsInit) init();
-            updateThread.Start();
-            renderThread.StartSynchronous();
+            if (!renderIsInit) InitialiseWindow();
+            UpdateThread.Start();
+            SdlThread.StartSynchronous();
         }
 
-        public void setPixel(int x, int y)
+        /// <summary>
+        ///  Draws a single pixel in the renderer's current colour.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void SetPixel(int x, int y)
         {
             SDL.SDL_RenderDrawPoint(RendererPtr, x, y);
         }
 
         public void Dispose()
         {
-            renderThread.Cancel();
-            updateThread.Cancel();
+            SdlThread.Cancel();
+            UpdateThread.Cancel();
             SDL.SDL_DestroyRenderer(RendererPtr);
             SDL.SDL_DestroyWindow(WindowPtr);
         }
 
-        public void addEntity(IDrawable entity)
+        public void AddEntity(IDrawable entity)
         {
             entities.Add(entity);
         }
 
-        private void eventLoop()
+        /// <summary>
+        /// This is a loop which runs continuously and updates the entities.
+        /// </summary>
+        private void UpdateLoop()
+        {
+            foreach (var e in entities) e.Update();
+        }
+
+        /// <summary>
+        /// This thread processes both SDL Events and render calls. All SDL Activity must be invoked from somewhere in this loop/
+        /// </summary>
+        private void SDLLoop()
         {
             SDL.SDL_Event e;
 
             while (SDL.SDL_PollEvent(out e) != 0)
             {
-
                 var leftMouseClick = e.button.state == 1 && e.button.button == 1;
-
                 var rightMouseClick = e.button.state == 1 && e.button.button == 3;
                 var mouseLocation = new Point(e.button.x, e.button.y);
                 var keyPressed = e.key.state == 1;
+
                 string key;
                 if (keyPressed)
                 {
@@ -144,18 +164,21 @@ namespace DrawDotNet
                 if (quit) Dispose();
             }
 
-            renderLoop();
-
+            RenderLoop();
         }
 
-        private void renderLoop()
+        /// <summary>
+        /// Iterates over entities and calls their draw functions and renders them. Called from the SDLThread.
+        /// </summary>
+        private void RenderLoop()
         {
+            SDL.SDL_RenderClear(RendererPtr);
             Utilities.ColorHelpers.setRenderColour(RendererPtr, BackgroundColor);
             SDL.SDL_RenderFillRect(RendererPtr, ref backgroundArea);
             Utilities.ColorHelpers.setRenderColour(RendererPtr, DrawingColor);
             foreach (IDrawable d in entities) d.Draw(RendererPtr, DrawingColor);
             SDL.SDL_RenderPresent(RendererPtr);
-            eventLoop();
+            SDLLoop();
         }
 
         #region properties
