@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -9,8 +9,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="SDL-Bin/SDL-Linux.dll" Link="SDL2.dll" CopyToOutputDirectory="PreserveNewest"  Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' " />
-    <None Include="SDL-Bin/SDL-Mac.dll" Link="SDL2.dll" CopyToOutputDirectory="PreserveNewest" Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' " />
-    <None Include="SDL-Bin/SDL-Windows.dll" Link="SDL2.dll" CopyToOutputDirectory="PreserveNewest" Condition=" '$(OS)' == 'Windows_NT' "  />
+    <None Include="SDL-Bin/SDL2-Linux.dll" Link="SDL2.dll" CopyToOutputDirectory="PreserveNewest" Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' " />
+    <None Include="SDL-Bin/SDL2-Mac.dll" Link="SDL2.dll" CopyToOutputDirectory="PreserveNewest" Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' " />
+    <None Include="SDL-Bin/SDL2-Windows.dll" Link="SDL2.dll" CopyToOutputDirectory="PreserveNewest" Condition=" '$(OS)' == 'Windows_NT' "  />
   </ItemGroup>
 </Project>
